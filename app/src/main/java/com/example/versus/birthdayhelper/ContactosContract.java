@@ -17,6 +17,7 @@ public class ContactosContract {
         public static final String TELEFONO = "telefono";
         public static final String FECHANACIMIENTO = "fechaNacimiento";
         public static final String NOMBRE = "nombre";
+
     }
 
 }
