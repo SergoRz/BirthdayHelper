@@ -3,7 +3,6 @@ package com.example.versus.birthdayhelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 /**
  * Created by Versus on 17/01/2017.
  */
@@ -18,15 +17,15 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE " + ContactosEntry.TABLE_NAME + " ("
-                + ContactosEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + ContactosEntry.ID + " TEXT NOT NULL,"
-                + ContactosEntry.NAME + " TEXT NOT NULL,"
-                + ContactosEntry.SPECIALTY + " TEXT NOT NULL,"
-                + ContactosEntry.PHONE_NUMBER + " TEXT NOT NULL,"
-                + ContactosEntry.BIO + " TEXT NOT NULL,"
-                + ContactosEntry.AVATAR_URI + " TEXT,"
-                + "UNIQUE (" + ContactosEntry.ID + "))");
+        sqLiteDatabase.execSQL("CREATE TABLE " + ContactosContract.ContactoEntry.TABLE_NAME + " ("
+                + ContactosContract.ContactoEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + ContactosContract.ContactoEntry.ID + " INTEGER NOT NULL,"
+                + ContactosContract.ContactoEntry.TIPONOTIF + " CHAR(1) NOT NULL,"
+                + ContactosContract.ContactoEntry.MENSAJE + " VARCHAR(160) NOT NULL,"
+                + ContactosContract.ContactoEntry.TELEFONO + " VARCHAR(15) NOT NULL,"
+                + ContactosContract.ContactoEntry.FECHANACIMIENTO + " VARCHAR(15) NOT NULL,"
+                + ContactosContract.ContactoEntry.NOMBRE + " VARCHAR(128),"
+                + "UNIQUE (" + ContactosContract.ContactoEntry.ID + "))");
     }
 
     @Override

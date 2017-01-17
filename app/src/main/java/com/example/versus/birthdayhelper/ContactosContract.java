@@ -2,10 +2,6 @@ package com.example.versus.birthdayhelper;
 
 import android.provider.BaseColumns;
 
-/**
- * Created by EmilioCB on 17/01/2017.
- */
-
 public class ContactosContract {
 
     public static abstract class ContactoEntry implements BaseColumns {
