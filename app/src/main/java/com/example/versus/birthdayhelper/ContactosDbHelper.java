@@ -26,7 +26,17 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Usuarios");
 
+        sqLiteDatabase.execSQL("CREATE TABLE " + ContactosContract.ContactoEntry.TABLE_NAME + " ("
+                + ContactosContract.ContactoEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + ContactosContract.ContactoEntry.ID + " INTEGER NOT NULL,"
+                + ContactosContract.ContactoEntry.TIPONOTIF + " CHAR(1) NOT NULL,"
+                + ContactosContract.ContactoEntry.MENSAJE + " VARCHAR(160) NOT NULL,"
+                + ContactosContract.ContactoEntry.TELEFONO + " VARCHAR(15) NOT NULL,"
+                + ContactosContract.ContactoEntry.FECHANACIMIENTO + " VARCHAR(15) NOT NULL,"
+                + ContactosContract.ContactoEntry.NOMBRE + " VARCHAR(128),"
+                + "UNIQUE (" + ContactosContract.ContactoEntry.ID + "))");
     }
 }
