@@ -3,9 +3,6 @@ package com.example.versus.birthdayhelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-/**
- * Created by Versus on 17/01/2017.
- */
 
 public class ContactosDbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;//Contexto de acción para el helper.
