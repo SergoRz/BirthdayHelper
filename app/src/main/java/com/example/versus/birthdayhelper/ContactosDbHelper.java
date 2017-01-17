@@ -20,15 +20,15 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(sqlCreate);
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(sqlCreate);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Usuarios");
+        db.execSQL("DROP TABLE IF EXISTS Usuarios");
 
-        sqLiteDatabase.execSQL(sqlCreate);
+        db.execSQL(sqlCreate);
     }
 }
