@@ -20,7 +20,6 @@ public class ListaContactos extends ListActivity{
         setContentView(R.layout.listacontactos);
 
 
-
     }
 
     private void obtenerContactos(){
