@@ -21,7 +21,6 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
             + ContactosContract.ContactoEntry.FECHANACIMIENTO + " VARCHAR(15) NULL,"
             + ContactosContract.ContactoEntry.NOMBRE + " VARCHAR(128) NOT NULL)";
 
-
     public ContactosDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
