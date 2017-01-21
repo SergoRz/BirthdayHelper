@@ -1,6 +1,5 @@
 package com.example.versus.birthdayhelper;
 
-
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -25,6 +24,10 @@ public class ListaContactos extends ListActivity{
         setContentView(R.layout.listacontactos);
 
         obtenerContactos();
+
+
+
+
     }
 
     private void obtenerContactos(){
@@ -51,3 +54,4 @@ public class ListaContactos extends ListActivity{
         }
     }
 }
+
