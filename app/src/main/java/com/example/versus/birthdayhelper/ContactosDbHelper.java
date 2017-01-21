@@ -47,6 +47,20 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
         db.execSQL(sqlInsert);
     }
 
+    public static void cargarContactos(SQLiteDatabase db){
+        String[] campos = new String[] {"tipoNotif", "mensaje","telefono", "fechaNacimiento", "nombre"};
+
+        Cursor c = db.query("Usuarios", campos, "null", null, null, null, null);
+
+        //Nos aseguramos de que existe al menos un registro
+        if (c.moveToFirst()) {
+            //Recorremos el cursor hasta que no haya más registros
+            do {
+                Contacto contacto = new Contacto();
+            } while(c.moveToNext());
+        }
+    }
+
 
 
 }

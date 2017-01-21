@@ -13,13 +13,15 @@ public class Contacto {
     private long telefono;
     private Date fechaNacimiento;
     private char tipoNotif;
+    private String mensaje;
 
-    public Contacto(int id, String nombre, long telefono, Date fechaNacimiento, char tipoNotif) {
+    public Contacto(int id, String nombre, long telefono, Date fechaNacimiento, char tipoNotif, String mensaje) {
         this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
         this.tipoNotif = tipoNotif;
+        this.mensaje = mensaje;
     }
 
     public int getId() {
@@ -42,6 +44,10 @@ public class Contacto {
         return tipoNotif;
     }
 
+    public String getMensaje() {
+        return mensaje;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -60,5 +66,9 @@ public class Contacto {
 
     public void setTipoNotif(char tipoNotif) {
         this.tipoNotif = tipoNotif;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 }

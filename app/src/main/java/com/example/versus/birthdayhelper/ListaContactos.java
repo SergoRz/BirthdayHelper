@@ -53,10 +53,11 @@ public class ListaContactos extends ListActivity{
                 sortOrder);
 
         while(mCursor.moveToNext()){
+
+
             Contacto contacto = new Contacto(Integer.valueOf(mCursor.getString(0)), mCursor.getString(1),
                     Long.valueOf(mCursor.getString(2)), null, '\u0000');
             ContactosDbHelper.insert(db, contacto);
-            arrayContactos.add(contacto);
         }
     }
 }
