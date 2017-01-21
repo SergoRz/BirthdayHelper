@@ -7,14 +7,27 @@ import java.util.Date;
  */
 
 public class Contacto {
+
+    private int id;
+    private String nombre;
     private long telefono;
     private Date fechaNacimiento;
-    private String nombre;
+    private char tipoNotif;
 
-    public Contacto(long telefono, Date fechaNacimiento, String nombre){
+    public Contacto(int id, String nombre, long telefono, Date fechaNacimiento, char tipoNotif) {
+        this.id = id;
+        this.nombre = nombre;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
-        this.nombre = nombre;
+        this.tipoNotif = tipoNotif;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 
     public long getTelefono() {
@@ -25,8 +38,16 @@ public class Contacto {
         return fechaNacimiento;
     }
 
-    public String getNombre() {
-        return nombre;
+    public char getTipoNotif() {
+        return tipoNotif;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public void setTelefono(long telefono) {
@@ -37,7 +58,7 @@ public class Contacto {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setTipoNotif(char tipoNotif) {
+        this.tipoNotif = tipoNotif;
     }
 }
