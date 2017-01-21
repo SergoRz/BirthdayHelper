@@ -31,8 +31,8 @@ public class ListaContactos extends ListActivity{
         } else{
             Log.d("BD","No se ha abierto correctamente");
         }
-
         obtenerContactos();
+
     }
 
     private void obtenerContactos(){
@@ -53,10 +53,7 @@ public class ListaContactos extends ListActivity{
                 sortOrder);
 
         while(mCursor.moveToNext()){
-
-
-            Contacto contacto = new Contacto(Integer.valueOf(mCursor.getString(0)), mCursor.getString(1),
-                    Long.valueOf(mCursor.getString(2)), null, '\u0000');
+            Contacto contacto = new Contacto(mCursor.getString(1), mCursor.getLong(2), null, '\u0000', null);
             ContactosDbHelper.insert(db, contacto);
         }
     }

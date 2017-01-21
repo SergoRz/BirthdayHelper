@@ -6,12 +6,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.ContactsContract;
 
+import java.util.Date;
+
 public class ContactosDbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;//Contexto de acción para el helper.
     public static final String DATABASE_NAME = "miscumples.db";//Nombre del archivo con extensión .db
 
     String sqlCreate = "CREATE TABLE " + ContactosContract.ContactoEntry.TABLE_NAME + " ("
-            + ContactosContract.ContactoEntry._ID + " INTEGER PRIMARY KEY NOT NULL,"
+            + ContactosContract.ContactoEntry._ID + " INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,"
             + ContactosContract.ContactoEntry.TIPONOTIF + " CHAR(1) NOT NULL,"
             + ContactosContract.ContactoEntry.MENSAJE + " VARCHAR(160) NOT NULL,"
             + ContactosContract.ContactoEntry.TELEFONO + " VARCHAR(15) NOT NULL,"
@@ -38,7 +40,6 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
 
     public static void insert(SQLiteDatabase db, Contacto oContacto){
         String sqlInsert = "INSERT INTO " + ContactosContract.ContactoEntry.TABLE_NAME + "VALUES("
-                + oContacto.getId()
                 + ", n, " +
                 "'Feliz Cumpleaños!',"
                 + oContacto.getTelefono() + ", ,"
@@ -56,11 +57,8 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
         if (c.moveToFirst()) {
             //Recorremos el cursor hasta que no haya más registros
             do {
-                Contacto contacto = new Contacto();
+                Contacto contacto = new Contacto(c.getString(1), c.getLong(2), c.getString(3), c.getString(4).charAt(0), c.getString(5));
             } while(c.moveToNext());
         }
     }
-
-
-
 }

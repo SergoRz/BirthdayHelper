@@ -8,24 +8,18 @@ import java.util.Date;
 
 public class Contacto {
 
-    private int id;
     private String nombre;
     private long telefono;
-    private Date fechaNacimiento;
+    private String fechaNacimiento;
     private char tipoNotif;
     private String mensaje;
 
-    public Contacto(int id, String nombre, long telefono, Date fechaNacimiento, char tipoNotif, String mensaje) {
-        this.id = id;
+    public Contacto(String nombre, long telefono, String fechaNacimiento, char tipoNotif, String mensaje) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
         this.tipoNotif = tipoNotif;
         this.mensaje = mensaje;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getNombre() {
@@ -36,7 +30,7 @@ public class Contacto {
         return telefono;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
@@ -48,10 +42,6 @@ public class Contacto {
         return mensaje;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -60,7 +50,7 @@ public class Contacto {
         this.telefono = telefono;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
