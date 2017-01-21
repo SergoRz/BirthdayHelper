@@ -9,6 +9,7 @@ import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.util.Log;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import java.util.ArrayList;
@@ -18,11 +19,13 @@ public class ListaContactos extends ListActivity{
     ArrayList<Contacto> arrayContactos = new ArrayList();
     SQLiteDatabase db;
     ContactosDbHelper usdbh;
+    ListView lvContactos;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listacontactos);
 
+        lvContactos = (ListView) findViewById(R.id.lvContactos);
         usdbh = new ContactosDbHelper(this);
         db = usdbh.getWritableDatabase();
 
@@ -34,7 +37,9 @@ public class ListaContactos extends ListActivity{
         obtenerContactos();
         arrayContactos = usdbh.cargarContactos(db);
 
+        ContactoAdapter adaptador = new ContactoAdapter(this, arrayContactos); //Constructor del adaptador de la lista
 
+        lvContactos.setAdapter(adaptador); //Se le asigna el adaptador a la lista
     }
 
     private void obtenerContactos(){
