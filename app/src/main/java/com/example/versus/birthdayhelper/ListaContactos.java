@@ -48,6 +48,7 @@ public class ListaContactos extends AppCompatActivity {
         for(int i = 0; i < arrayContactos.size(); i++){
             Log.d("Contacto", arrayContactos.get(i).toString());
         }
+
         ContactoAdapter adaptador = new ContactoAdapter(this, arrayContactos); //Constructor del adaptador de la lista
 
         lvContactos.setAdapter(adaptador); //Se le asigna el adaptador a la lista
