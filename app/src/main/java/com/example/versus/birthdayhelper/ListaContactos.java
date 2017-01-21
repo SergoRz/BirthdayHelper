@@ -32,7 +32,7 @@ public class ListaContactos extends ListActivity{
             Log.d("BD","No se ha abierto correctamente");
         }
         obtenerContactos();
-
+        arrayContactos = usdbh.cargarContactos(db);
     }
 
     private void obtenerContactos(){
@@ -54,7 +54,7 @@ public class ListaContactos extends ListActivity{
 
         while(mCursor.moveToNext()){
             Contacto contacto = new Contacto(mCursor.getString(1), mCursor.getLong(2), null, '\u0000', null);
-            ContactosDbHelper.insert(db, contacto);
+            usdbh.insert(db, contacto);
         }
     }
 }

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.ContactsContract;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ContactosDbHelper extends SQLiteOpenHelper {
@@ -38,7 +39,7 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
         db.execSQL(sqlCreate);
     }
 
-    public static void insert(SQLiteDatabase db, Contacto oContacto){
+    public void insert(SQLiteDatabase db, Contacto oContacto){
         String sqlInsert = "INSERT INTO " + ContactosContract.ContactoEntry.TABLE_NAME + "VALUES("
                 + ", n, " +
                 "'Feliz Cumpleaños!',"
@@ -48,9 +49,10 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
         db.execSQL(sqlInsert);
     }
 
-    public static void cargarContactos(SQLiteDatabase db){
-        String[] campos = new String[] {"tipoNotif", "mensaje","telefono", "fechaNacimiento", "nombre"};
+    public ArrayList<Contacto> cargarContactos(SQLiteDatabase db){
+        ArrayList<Contacto> arrayContactos = new ArrayList();
 
+        String[] campos = new String[] {"tipoNotif", "mensaje","telefono", "fechaNacimiento", "nombre"};
         Cursor c = db.query("Usuarios", campos, "null", null, null, null, null);
 
         //Nos aseguramos de que existe al menos un registro
@@ -58,7 +60,9 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
             //Recorremos el cursor hasta que no haya más registros
             do {
                 Contacto contacto = new Contacto(c.getString(1), c.getLong(2), c.getString(3), c.getString(4).charAt(0), c.getString(5));
+                arrayContactos.add(contacto);
             } while(c.moveToNext());
         }
+        return arrayContactos;
     }
 }
