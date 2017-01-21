@@ -14,12 +14,12 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "miscumples.db";//Nombre del archivo con extensión .db
 
     String sqlCreate = "CREATE TABLE " + ContactosContract.ContactoEntry.TABLE_NAME + " ("
-            + ContactosContract.ContactoEntry._ID + " INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,"
+            + ContactosContract.ContactoEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + ContactosContract.ContactoEntry.TIPONOTIF + " CHAR(1) NOT NULL,"
             + ContactosContract.ContactoEntry.MENSAJE + " VARCHAR(160) NOT NULL,"
             + ContactosContract.ContactoEntry.TELEFONO + " VARCHAR(15) NOT NULL,"
             + ContactosContract.ContactoEntry.FECHANACIMIENTO + " VARCHAR(15) NULL,"
-            + ContactosContract.ContactoEntry.NOMBRE + " VARCHAR(128) NOT NULL)";
+            + ContactosContract.ContactoEntry.NOMBRE + " VARCHAR(128) NOT NULL);";
 
     public ContactosDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -52,7 +52,7 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
         ArrayList<Contacto> arrayContactos = new ArrayList();
 
         String[] campos = new String[] {"tipoNotif", "mensaje","telefono", "fechaNacimiento", "nombre"};
-        Cursor c = db.query("Usuarios", campos, "null", null, null, null, null);
+        Cursor c = db.query("contactos", campos, "null", null, null, null, null);
 
         //Nos aseguramos de que existe al menos un registro
         if (c.moveToFirst()) {
