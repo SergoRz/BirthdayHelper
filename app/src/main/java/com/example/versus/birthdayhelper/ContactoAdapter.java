@@ -51,6 +51,8 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> {
         tvNombre.setText(contactoActual.getNombre()); //Se recoge el titulo del titular en el que se encuentra
         tvTelefono.setText(String.valueOf(contactoActual.getTelefono())); //Se recoge el subtitulo del titular en el que se encuentra
 
+        if(contactoActual.getTipoNotif() == 'n') tvAviso.setText("Aviso: Solo notificación");
+        else tvAviso.setText("Aviso: Enviar SMS");
 
         return layoutContacto;
     }
