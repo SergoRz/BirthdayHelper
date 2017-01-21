@@ -11,10 +11,6 @@ import android.widget.SimpleCursorAdapter;
 
 import java.util.ArrayList;
 
-/**
- * Created by EmilioCB on 18/01/2017.
- */
-
 public class ListaContactos extends ListActivity{
 
     ArrayList<Contacto> arrayContactos = new ArrayList();
