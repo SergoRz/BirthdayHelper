@@ -2,10 +2,12 @@ package com.example.versus.birthdayhelper;
 
 import android.app.ListActivity;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.util.Log;
 import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
 
@@ -14,16 +16,23 @@ import java.util.ArrayList;
 public class ListaContactos extends ListActivity{
 
     ArrayList<Contacto> arrayContactos = new ArrayList();
+    SQLiteDatabase db;
+    ContactosDbHelper usdbh;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listacontactos);
 
+        usdbh = new ContactosDbHelper(this);
+        db = usdbh.getWritableDatabase();
+
+        if(db != null){
+            Log.d("BD","Se ha abierto correctamente");
+        } else{
+            Log.d("BD","No se ha abierto correctamente");
+        }
+
         obtenerContactos();
-
-
-
-
     }
 
     private void obtenerContactos(){
@@ -46,6 +55,7 @@ public class ListaContactos extends ListActivity{
         while(mCursor.moveToNext()){
             Contacto contacto = new Contacto(Integer.valueOf(mCursor.getString(0)), mCursor.getString(1),
                     Long.valueOf(mCursor.getString(2)), null, '\u0000');
+            ContactosDbHelper.insert(db, contacto);
             arrayContactos.add(contacto);
         }
     }

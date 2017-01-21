@@ -11,12 +11,12 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "miscumples.db";//Nombre del archivo con extensión .db
 
     String sqlCreate = "CREATE TABLE " + ContactosContract.ContactoEntry.TABLE_NAME + " ("
-            + ContactosContract.ContactoEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + ContactosContract.ContactoEntry._ID + " INTEGER PRIMARY KEY NOT NULL,"
             + ContactosContract.ContactoEntry.TIPONOTIF + " CHAR(1) NOT NULL,"
             + ContactosContract.ContactoEntry.MENSAJE + " VARCHAR(160) NOT NULL,"
             + ContactosContract.ContactoEntry.TELEFONO + " VARCHAR(15) NOT NULL,"
-            + ContactosContract.ContactoEntry.FECHANACIMIENTO + " VARCHAR(15) NOT NULL,"
-            + ContactosContract.ContactoEntry.NOMBRE + " VARCHAR(128))";
+            + ContactosContract.ContactoEntry.FECHANACIMIENTO + " VARCHAR(15) NULL,"
+            + ContactosContract.ContactoEntry.NOMBRE + " VARCHAR(128) NOT NULL)";
 
 
     public ContactosDbHelper(Context context) {
@@ -34,6 +34,16 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS contactos");
 
         db.execSQL(sqlCreate);
+    }
+
+    public static void insert(SQLiteDatabase db, Contacto oContacto){
+        String sqlInsert = "INSERT INTO " + ContactosContract.ContactoEntry.TABLE_NAME
+                + "VALUES(" + oContacto.getId()
+                + ", n, 'Feliz Cumpleaños!',"
+                + oContacto.getTelefono() + ", ,"
+                + oContacto.getNombre() + ");";
+
+        db.execSQL(sqlInsert);
     }
 
 

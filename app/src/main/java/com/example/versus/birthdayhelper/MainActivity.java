@@ -12,14 +12,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ContactosDbHelper usdbh = new ContactosDbHelper(this);
 
-        SQLiteDatabase db = usdbh.getWritableDatabase();
-
-        if(db != null){
-            Log.d("BD","Se ha abierto correctamente");
-        } else{
-            Log.d("BD","No se ha abierto correctamente");
-        }
     }
 }
