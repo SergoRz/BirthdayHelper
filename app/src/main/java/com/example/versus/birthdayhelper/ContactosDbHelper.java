@@ -39,10 +39,11 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
     }
 
     public void insert(SQLiteDatabase db, Contacto oContacto){
-        String sqlInsert = "INSERT INTO " + ContactosContract.ContactoEntry.TABLE_NAME + "VALUES("
-                + ", n, " +
-                "'Feliz Cumpleaños!',"
-                + oContacto.getTelefono() + ", ,"
+        String sqlInsert = "INSERT INTO " + ContactosContract.ContactoEntry.TABLE_NAME + " VALUES("
+                + "'n', "
+                + "'Feliz Cumpleaños!', "
+                + oContacto.getTelefono()
+                + ", null, "
                 + oContacto.getNombre() + ");";
 
         db.execSQL(sqlInsert);
@@ -58,7 +59,7 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
         if (c.moveToFirst()) {
             //Recorremos el cursor hasta que no haya más registros
             do {
-                Contacto contacto = new Contacto(c.getString(1), c.getLong(2), c.getString(3), c.getString(4).charAt(0), c.getString(5));
+                Contacto contacto = new Contacto(c.getString(1), c.getString(2), c.getString(3), c.getString(4).charAt(0), c.getString(5));
                 arrayContactos.add(contacto);
             } while(c.moveToNext());
         }

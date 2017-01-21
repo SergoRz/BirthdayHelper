@@ -57,7 +57,7 @@ public class ListaContactos extends AppCompatActivity {
             //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
         }
         else{
-            String[] proyeccion = new String[] {ContactsContract.Data._ID, ContactsContract.Data.DISPLAY_NAME,
+            String[] proyeccion = new String[] {ContactsContract.Data.DISPLAY_NAME,
                     ContactsContract.CommonDataKinds.Phone.NUMBER};
 
             String selectionClause = ContactsContract.Data.MIMETYPE + "='" +
@@ -68,13 +68,17 @@ public class ListaContactos extends AppCompatActivity {
 
             Cursor mCursor = getContentResolver().query(
                     ContactsContract.Contacts.CONTENT_URI, //URI de contenido para los contactos
-                    proyeccion,
-                    selectionClause,
+                    null,
+                    null,
                     null,
                     sortOrder);
 
             while(mCursor.moveToNext()){
-                Contacto contacto = new Contacto(mCursor.getString(1), mCursor.getLong(2), null, '\u0000', null);
+
+                String nombre = ContactsContract.Data.DISPLAY_NAME;
+                String numero = Phone.NUMBER;
+
+                Contacto contacto = new Contacto(nombre, numero, null, '\u0000', null);
                 usdbh.insert(db, contacto);
             }
         }

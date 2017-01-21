@@ -9,12 +9,12 @@ import java.util.Date;
 public class Contacto {
 
     private String nombre;
-    private long telefono;
+    private String telefono;
     private String fechaNacimiento;
     private char tipoNotif;
     private String mensaje;
 
-    public Contacto(String nombre, long telefono, String fechaNacimiento, char tipoNotif, String mensaje) {
+    public Contacto(String nombre, String telefono, String fechaNacimiento, char tipoNotif, String mensaje) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
@@ -26,7 +26,7 @@ public class Contacto {
         return nombre;
     }
 
-    public long getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
@@ -46,7 +46,7 @@ public class Contacto {
         this.nombre = nombre;
     }
 
-    public void setTelefono(long telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
