@@ -48,7 +48,6 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> {
 
         Contacto contactoActual = array_contactos.get(position); //Se recorren los titulares
 
-        ivFoto.setImageDrawable(R.id.); //Se recoge el titulo del titular en el que se encuentra
         tvNombre.setText(contactoActual.getNombre()); //Se recoge el titulo del titular en el que se encuentra
         tvTelefono.setText(String.valueOf(contactoActual.getTelefono())); //Se recoge el subtitulo del titular en el que se encuentra
 
