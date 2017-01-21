@@ -1,6 +1,7 @@
 package com.example.versus.birthdayhelper;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -19,7 +20,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class ListaContactos extends AppCompatActivity {
+public class ListaContactos extends Activity {
 
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     ArrayList<Contacto> arrayContactos = new ArrayList();

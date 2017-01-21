@@ -25,7 +25,7 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> {
      * @param arrayContactos ArrayList de los contactos
      */
     public ContactoAdapter(Context context, ArrayList<Contacto> arrayContactos) {
-        super(context, -1, arrayContactos);
+        super(context, R.layout.tuplacontacto, arrayContactos);
         this.contexto = context;
         this.arrayContactos = arrayContactos;
     }
@@ -38,11 +38,12 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> {
      * @return Devuelve la disposicion de la view
      */
     public View getView(int position, View convertView, ViewGroup parent) {
+
         LayoutInflater inflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE); //Se crea el LayoutInflater
 
         View layoutContacto = inflater.inflate(R.layout.tuplacontacto, parent, false); //Instancia el layout personalizado(fila) en esta Vista.
 
-        ImageView ivFoto = (ImageView) layoutContacto.findViewById(R.id.imageViewFoto );
+        ImageView ivFoto = (ImageView) layoutContacto.findViewById(R.id.imageViewFoto);
         TextView tvNombre = (TextView) layoutContacto.findViewById(R.id.textViewNombre); //TextView del titulo, se asocia con el del XML
         TextView tvTelefono = (TextView) layoutContacto.findViewById(R.id.textViewNumero); //TextView del subtitulo, se asocia con el del XML
         TextView tvAviso = (TextView) layoutContacto.findViewById(R.id.textViewAviso);

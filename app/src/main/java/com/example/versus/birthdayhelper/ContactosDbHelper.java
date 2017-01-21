@@ -65,7 +65,7 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
         if (c.moveToFirst()) {
             //Recorremos el cursor hasta que no haya más registros
             do {
-                //public Contacto(int id,String nombre, String telefono, String fechaNacimiento, char tipoNotif, String mensaje)
+                //Contacto(int id,String nombre, String telefono, String fechaNacimiento, char tipoNotif, String mensaje)
                 Log.d("DATOS PARA ARRAY: ", c.getInt(0) + " " + c.getString(1)+ " " + c.getString(2)+ " " + c.getString(3)+ " " + c.getString(4) + " " + c.getString(5));
                 Contacto contacto = new Contacto(c.getInt(0),c.getString(5), c.getString(3), c.getString(4), c.getString(1).charAt(0), c.getString(2));
                 arrayContactos.add(contacto);
