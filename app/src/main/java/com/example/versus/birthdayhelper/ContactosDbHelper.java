@@ -14,7 +14,7 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "miscumples.db";//Nombre del archivo con extensión .db
 
     String sqlCreate = "CREATE TABLE " + ContactosContract.ContactoEntry.TABLE_NAME + " ("
-            + ContactosContract.ContactoEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + ContactosContract.ContactoEntry._ID + " INTEGER PRIMARY KEY,"
             + ContactosContract.ContactoEntry.TIPONOTIF + " CHAR(1) NOT NULL,"
             + ContactosContract.ContactoEntry.MENSAJE + " VARCHAR(160) NOT NULL,"
             + ContactosContract.ContactoEntry.TELEFONO + " VARCHAR(15) NOT NULL,"
@@ -27,6 +27,7 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL("DROP TABLE IF EXISTS contactos");
         db.execSQL(sqlCreate);
     }
 
@@ -40,11 +41,12 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
 
     public void insert(SQLiteDatabase db, Contacto oContacto){
         String sqlInsert = "INSERT INTO " + ContactosContract.ContactoEntry.TABLE_NAME + " VALUES("
-                + "'n', "
-                + "'Feliz Cumpleaños!', "
+                + oContacto.getId()
+                + ",'n', "
+                + "'Feliz Cumpleaños!', '"
                 + oContacto.getTelefono()
-                + ", null, "
-                + oContacto.getNombre() + ");";
+                + "', null, '"
+                + oContacto.getNombre() + "')";
 
         db.execSQL(sqlInsert);
     }
@@ -59,7 +61,8 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
         if (c.moveToFirst()) {
             //Recorremos el cursor hasta que no haya más registros
             do {
-                Contacto contacto = new Contacto(c.getString(1), c.getString(2), c.getString(3), c.getString(4).charAt(0), c.getString(5));
+                //public Contacto(int id,String nombre, String telefono, String fechaNacimiento, char tipoNotif, String mensaje)
+                Contacto contacto = new Contacto(c.getInt(1),c.getString(1), c.getString(2), c.getString(3), c.getString(4).charAt(0), c.getString(5));
                 arrayContactos.add(contacto);
             } while(c.moveToNext());
         }
