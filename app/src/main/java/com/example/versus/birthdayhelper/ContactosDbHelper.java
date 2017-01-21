@@ -37,14 +37,16 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
     }
 
     public static void insert(SQLiteDatabase db, Contacto oContacto){
-        String sqlInsert = "INSERT INTO " + ContactosContract.ContactoEntry.TABLE_NAME
-                + "VALUES(" + oContacto.getId()
-                + ", n, 'Feliz Cumpleaños!',"
+        String sqlInsert = "INSERT INTO " + ContactosContract.ContactoEntry.TABLE_NAME + "VALUES("
+                + oContacto.getId()
+                + ", n, " +
+                "'Feliz Cumpleaños!',"
                 + oContacto.getTelefono() + ", ,"
                 + oContacto.getNombre() + ");";
 
         db.execSQL(sqlInsert);
     }
+
 
 
 }
