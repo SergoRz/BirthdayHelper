@@ -33,6 +33,8 @@ public class ListaContactos extends ListActivity{
         }
         obtenerContactos();
         arrayContactos = usdbh.cargarContactos(db);
+
+
     }
 
     private void obtenerContactos(){

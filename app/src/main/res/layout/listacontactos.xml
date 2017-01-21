@@ -10,8 +10,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.versus.birthdayhelper.MainActivity">
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextFiltro"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:id="@+id/ListViewContactos"
+        android:layout_below="@+id/editTextFiltro" />
 </RelativeLayout>
