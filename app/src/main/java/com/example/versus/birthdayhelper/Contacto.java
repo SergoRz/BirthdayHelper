@@ -7,6 +7,17 @@ import java.util.Date;
  */
 
 public class Contacto {
+    @Override
+    public String toString() {
+        return "Contacto{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", fechaNacimiento='" + fechaNacimiento + '\'' +
+                ", tipoNotif=" + tipoNotif +
+                ", mensaje='" + mensaje + '\'' +
+                '}';
+    }
 
     private int id;
     private String nombre;

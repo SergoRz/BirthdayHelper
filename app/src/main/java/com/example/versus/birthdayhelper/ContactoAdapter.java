@@ -15,18 +15,19 @@ import java.util.ArrayList;
  */
 
 public class ContactoAdapter extends ArrayAdapter<Contacto> {
+
     private final Context contexto;
-    private final ArrayList<Contacto> array_contactos;
+    private final ArrayList<Contacto> arrayContactos;
 
     /**
      * Constructor de la clase
      * @param context Contexto de la Activity
-     * @param array_contactos ArrayList de los contactos
+     * @param arrayContactos ArrayList de los contactos
      */
-    public ContactoAdapter(Context context, ArrayList<Contacto> array_contactos) {
-        super(context, -1, array_contactos);
+    public ContactoAdapter(Context context, ArrayList<Contacto> arrayContactos) {
+        super(context, -1, arrayContactos);
         this.contexto = context;
-        this.array_contactos = array_contactos;
+        this.arrayContactos = arrayContactos;
     }
 
     /**
@@ -46,7 +47,7 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> {
         TextView tvTelefono = (TextView) layoutContacto.findViewById(R.id.textViewNumero); //TextView del subtitulo, se asocia con el del XML
         TextView tvAviso = (TextView) layoutContacto.findViewById(R.id.textViewAviso);
 
-        Contacto contactoActual = array_contactos.get(position); //Se recorren los titulares
+        Contacto contactoActual = arrayContactos.get(position); //Se recorren los titulares
 
         tvNombre.setText(contactoActual.getNombre()); //Se recoge el titulo del titular en el que se encuentra
         tvTelefono.setText(String.valueOf(contactoActual.getTelefono())); //Se recoge el subtitulo del titular en el que se encuentra
