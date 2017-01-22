@@ -58,7 +58,7 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
     public ArrayList<Contacto> cargarContactos(SQLiteDatabase db){
         ArrayList<Contacto> arrayContactos = new ArrayList();
 
-        String[] campos = new String[] {"id", "tipoNotif", "mensaje","telefono", "fechaNacimiento", "nombre"};
+        String[] campos = new String[] {"_id", "tipoNotif", "mensaje","telefono", "fechaNacimiento", "nombre"};
         Cursor c = db.query("contactos", campos, null, null, null, null, null);
 
         //Nos aseguramos de que existe al menos un registro

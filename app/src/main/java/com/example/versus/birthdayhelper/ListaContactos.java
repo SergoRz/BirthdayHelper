@@ -2,6 +2,7 @@ package com.example.versus.birthdayhelper;
 
 import android.Manifest;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,10 +12,16 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,16 +29,23 @@ import java.util.ArrayList;
 public class ListaContactos extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
-    ArrayList<Contacto> arrayContactos = new ArrayList();
+    ArrayList<Contacto> arrayContactos;
     SQLiteDatabase db;
     ContactosDbHelper usdbh;
+    TextView tvBusqueda;
     ListView lvContactos;
+    ContactoAdapter adaptador;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.principal);
 
-        lvContactos = (ListView) findViewById(android.R.id.list);
+
+        lvContactos = (ListView) findViewById(R.id.lvContactos);
+        lvContactos.setTextFilterEnabled(true);
+
+        tvBusqueda = (TextView) findViewById(R.id.tvBusqueda);
+
         usdbh = new ContactosDbHelper(this);
         db = usdbh.getWritableDatabase();
 
@@ -42,16 +56,44 @@ public class ListaContactos extends AppCompatActivity {
         }
 
         obtenerContactos();
-
+        arrayContactos = new ArrayList();
         arrayContactos = usdbh.cargarContactos(db);
 
         for(int i = 0; i < arrayContactos.size(); i++){
             Log.d("Contacto", arrayContactos.get(i).toString());
         }
 
-        ContactoAdapter adaptador = new ContactoAdapter(this, arrayContactos); //Constructor del adaptador de la lista
+        adaptador = new ContactoAdapter(this, arrayContactos); //Constructor del adaptador de la lista
 
         lvContactos.setAdapter(adaptador); //Se le asigna el adaptador a la lista
+
+        lvContactos.setOnItemClickListener(new AdapterView.OnItemClickListener(){ //Listener para cuando se haga click sobre un item de la lista
+            public void onItemClick(AdapterView<?> adapter, View view, int position, long id){ //Cuando se haga click en un item de la lista..
+               verContacto(position);
+            }
+        });
+
+        tvBusqueda.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // TODO Auto-generated method stub
+
+                adaptador.getFilter().filter(s);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+
+            }
+        });
     }
 
 
@@ -75,12 +117,18 @@ public class ListaContactos extends AppCompatActivity {
                 null,
                 sortOrder);
         while (c.moveToNext()) {
-            Log.d("Datos", "Identificador: " + Integer.valueOf(c.getString(0)) + " Nombre: " + c.getString(1) + " Número: " + c.getString(2) + " Tipo: " + c.getString(3));
             Contacto contacto = new Contacto(Integer.valueOf(c.getString(0)), c.getString(1), c.getString(2), null, '\u0000', null);
             usdbh.insert(db, contacto);
         }
         c.close();
         }
+    }
+
+    public void verContacto(int position){
+        Intent intent = new Intent(this, VistaContacto.class);
+        Contacto contacto = arrayContactos.get(position);
+        intent.putExtra("contacto", contacto);
+        startActivity(intent);
     }
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -89,9 +137,11 @@ public class ListaContactos extends AppCompatActivity {
                 // Permission is granted
                 obtenerContactos();
             } else {
-                Toast.makeText(this, "Until you grant the permission, we canot display the names", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Hasta que no aceptes los permisos no podremos mostrar los contactos", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+
 }
 

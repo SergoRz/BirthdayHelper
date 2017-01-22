@@ -1,12 +1,11 @@
 package com.example.versus.birthdayhelper;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-/**
- * Created by EmilioCB on 17/01/2017.
- */
-
-public class Contacto {
+public class Contacto implements Parcelable {
     @Override
     public String toString() {
         return "Contacto{" +
@@ -82,4 +81,41 @@ public class Contacto {
     public void setId(int id) {
         this.id = id;
     }
+
+    protected Contacto(Parcel in) {
+        id = in.readInt();
+        nombre = in.readString();
+        telefono = in.readString();
+        fechaNacimiento = in.readString();
+        tipoNotif = (char) in.readValue(char.class.getClassLoader());
+        mensaje = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(nombre);
+        dest.writeString(telefono);
+        dest.writeString(fechaNacimiento);
+        dest.writeValue(tipoNotif);
+        dest.writeString(mensaje);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Contacto> CREATOR = new Parcelable.Creator<Contacto>() {
+        @Override
+        public Contacto createFromParcel(Parcel in) {
+            return new Contacto(in);
+        }
+
+        @Override
+        public Contacto[] newArray(int size) {
+            return new Contacto[size];
+        }
+    };
 }
