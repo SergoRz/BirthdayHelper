@@ -87,6 +87,7 @@ public class ListaContactos extends Activity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // TODO Auto-generated method stub
 
+
             }
 
             @Override
