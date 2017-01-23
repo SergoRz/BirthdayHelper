@@ -20,7 +20,7 @@ public class VistaContacto extends AppCompatActivity {
         etNombre = (EditText) findViewById(R.id.etNombre);
         cbSMS = (CheckBox) findViewById(R.id.cbSMS);
         etMensaje = (EditText) findViewById(R.id.etMensaje);
-
+        
         Bundle extras = getIntent().getExtras();
         contacto = extras.getParcelable("contacto");
 

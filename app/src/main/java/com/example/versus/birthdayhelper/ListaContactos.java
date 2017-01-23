@@ -74,7 +74,7 @@ public class ListaContactos extends Activity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // TODO Auto-generated method stub
-
+                adaptador.getFilter().filter(s);
             }
 
             @Override
@@ -85,7 +85,6 @@ public class ListaContactos extends Activity {
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-                adaptador.getFilter().filter(s);
             }
         });
     }

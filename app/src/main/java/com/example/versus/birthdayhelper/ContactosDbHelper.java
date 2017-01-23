@@ -58,7 +58,7 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
         ArrayList<Contacto> arrayContactos = new ArrayList();
 
         String[] campos = new String[] {"id", "tipoNotif", "mensaje","telefono", "fechaNacimiento", "nombre"};
-        Cursor c = db.query("contactos", campos, null, null, null, null, null);
+        Cursor c = db.query("contactos", campos, null, null, null, null, "nombre ASC");
 
         //Nos aseguramos de que existe al menos un registro
         if (c.moveToFirst()) {

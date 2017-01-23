@@ -40,11 +40,11 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> implements Filterabl
      * @return Devuelve la disposicion de la view
      */
     public View getView(int position, View convertView, ViewGroup parent) {
+        View layoutContacto = null;
 
         LayoutInflater inflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE); //Se crea el LayoutInflater
 
-        View layoutContacto = inflater.inflate(R.layout.tuplacontacto, parent, false); //Instancia el layout personalizado(fila) en esta Vista.
-
+        layoutContacto = inflater.inflate(R.layout.tuplacontacto, parent, false); //Instancia el layout personalizado(fila) en esta Vista.
         ImageView ivFoto = (ImageView) layoutContacto.findViewById(R.id.imageViewFoto);
         TextView tvNombre = (TextView) layoutContacto.findViewById(R.id.textViewNombre); //TextView del titulo, se asocia con el del XML
         TextView tvTelefono = (TextView) layoutContacto.findViewById(R.id.textViewNumero); //TextView del subtitulo, se asocia con el del XML
@@ -55,7 +55,7 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> implements Filterabl
         tvNombre.setText(contactoActual.getNombre()); //Se recoge el titulo del titular en el que se encuentra
         tvTelefono.setText(String.valueOf(contactoActual.getTelefono())); //Se recoge el subtitulo del titular en el que se encuentra
 
-        if(contactoActual.getTipoNotif() == 'n') tvAviso.setText("Aviso: Solo notificación");
+        if (contactoActual.getTipoNotif() == 'n') tvAviso.setText("Aviso: Solo notificación");
         else tvAviso.setText("Aviso: Enviar SMS");
 
         return layoutContacto;
@@ -67,7 +67,10 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> implements Filterabl
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults filterResults = new FilterResults();
 
-            if(constraint != null && arrayContactos != null) {
+            if(constraint == null || arrayContactos == null) {
+                filterResults.values = arrayContactos;
+                filterResults.count = arrayContactos.size();
+            } else{
                 ArrayList<Contacto> tempList = new ArrayList<>();
 
                 for(int i = 0; i < arrayContactos.size(); i++){
@@ -79,23 +82,23 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> implements Filterabl
 
                 filterResults.values = tempList;
                 filterResults.count = tempList.size();
-            } else{
-                filterResults.values = arrayContactos;
-                filterResults.count = arrayContactos.size();
             }
             return filterResults;
         }
-
+        @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             arrayContactosFiltrado = (ArrayList<Contacto>) results.values;
 
+            //Se muestra ambos array el original y el filtrado
+            /*
             for(int i = 0; i < arrayContactosFiltrado.size(); i++){
                 Log.d("Contacto filtrado", arrayContactosFiltrado.get(i).toString());
             }
             Log.d("-----", "------------------------------------------------------------------");
             for(int i = 0; i < arrayContactos.size(); i++){
                 Log.d("Contacto", arrayContactos.get(i).toString());
-            }
+            }*/
+
             notifyDataSetChanged();
         }
     };
