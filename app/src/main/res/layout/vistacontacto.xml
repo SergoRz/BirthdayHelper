@@ -43,7 +43,9 @@
                     android:text=""
                     android:ems="10"
                     android:id="@+id/etNombre"
-                    android:layout_weight="0.12" />
+                    android:layout_weight="0.12"
+                    android:editable="false"
+                    android:enabled="false" />
 
                 <Button
                     android:text="..."
@@ -84,11 +86,15 @@
             android:id="@+id/tvTelefono"
             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title" />
 
-        <Spinner
-            android:layout_width="150dp"
+        <EditText
+            android:layout_width="142dp"
             android:layout_height="wrap_content"
-            android:id="@+id/spnTelefono"
-            android:layout_weight="0.25" />
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etTelf"
+            android:editable="false"
+            android:enabled="false" />
+
     </LinearLayout>
 
     <LinearLayout

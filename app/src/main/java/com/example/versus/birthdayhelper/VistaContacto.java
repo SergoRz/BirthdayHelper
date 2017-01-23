@@ -11,6 +11,7 @@ public class VistaContacto extends AppCompatActivity {
     private EditText etNombre;
     private CheckBox cbSMS;
     private EditText etMensaje;
+    private EditText etTelf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,18 +21,19 @@ public class VistaContacto extends AppCompatActivity {
         etNombre = (EditText) findViewById(R.id.etNombre);
         cbSMS = (CheckBox) findViewById(R.id.cbSMS);
         etMensaje = (EditText) findViewById(R.id.etMensaje);
-        
+        etMensaje = (EditText) findViewById(R.id.etMensaje);
+        etTelf = (EditText) findViewById(R.id.etTelf);
+
         Bundle extras = getIntent().getExtras();
         contacto = extras.getParcelable("contacto");
 
-
         etNombre.setText(contacto.getNombre());
+        etTelf.setText(contacto.getTelefono());
 
         if(contacto.getTipoNotif() == 's'){
             cbSMS.setChecked(true);
         }
 
         etMensaje.setText(contacto.getMensaje());
-
     }
 }
