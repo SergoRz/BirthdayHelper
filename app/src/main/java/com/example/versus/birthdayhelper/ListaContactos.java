@@ -2,7 +2,6 @@ package com.example.versus.birthdayhelper;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -10,18 +9,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.provider.ContactsContract.Data;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,19 +43,21 @@ public class ListaContactos extends Activity {
         usdbh = new ContactosDbHelper(this);
         db = usdbh.getWritableDatabase();
 
+        /*
         if(db != null){
             Log.d("BD","Se ha abierto correctamente");
         } else{
             Log.d("BD","No se ha abierto correctamente");
-        }
+        }*/
 
         obtenerContactos();
         arrayContactos = new ArrayList();
         arrayContactos = usdbh.cargarContactos(db);
 
+        /*
         for(int i = 0; i < arrayContactos.size(); i++){
             Log.d("Contacto", arrayContactos.get(i).toString());
-        }
+        }*/
 
         adaptador = new ContactoAdapter(this, arrayContactos); //Constructor del adaptador de la lista
 
@@ -80,20 +75,17 @@ public class ListaContactos extends Activity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // TODO Auto-generated method stub
 
-                adaptador.getFilter().filter(s);
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // TODO Auto-generated method stub
-
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-
+                adaptador.getFilter().filter(s);
             }
         });
     }

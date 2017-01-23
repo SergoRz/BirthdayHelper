@@ -1,23 +1,24 @@
 package com.example.versus.birthdayhelper;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.*;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by EmilioCB on 21/01/2017.
- */
 
-public class ContactoAdapter extends ArrayAdapter<Contacto> {
+
+public class ContactoAdapter extends ArrayAdapter<Contacto> implements Filterable {
 
     private final Context contexto;
-    private final ArrayList<Contacto> arrayContactos;
+    private ArrayList<Contacto> arrayContactos;
+    private ArrayList<Contacto> arrayContactosFiltrado;
 
     /**
      * Constructor de la clase
@@ -28,6 +29,7 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> {
         super(context, R.layout.tuplacontacto, arrayContactos);
         this.contexto = context;
         this.arrayContactos = arrayContactos;
+        this.arrayContactosFiltrado = arrayContactos;
     }
 
     /**
@@ -48,7 +50,7 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> {
         TextView tvTelefono = (TextView) layoutContacto.findViewById(R.id.textViewNumero); //TextView del subtitulo, se asocia con el del XML
         TextView tvAviso = (TextView) layoutContacto.findViewById(R.id.textViewAviso);
 
-        Contacto contactoActual = arrayContactos.get(position); //Se recorren los titulares
+        Contacto contactoActual = arrayContactosFiltrado.get(position); //Se recorren los titulares
 
         tvNombre.setText(contactoActual.getNombre()); //Se recoge el titulo del titular en el que se encuentra
         tvTelefono.setText(String.valueOf(contactoActual.getTelefono())); //Se recoge el subtitulo del titular en el que se encuentra
@@ -57,5 +59,49 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> {
         else tvAviso.setText("Aviso: Enviar SMS");
 
         return layoutContacto;
+    }
+
+
+    private Filter myFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults filterResults = new FilterResults();
+
+            if(constraint != null && arrayContactos != null) {
+                ArrayList<Contacto> tempList = new ArrayList<>();
+
+                for(int i = 0; i < arrayContactos.size(); i++){
+                    if(arrayContactos.get(i).getNombre().contains(constraint)) {
+                        Contacto item = arrayContactos.get(i);
+                        tempList.add(item);
+                    }
+                }
+
+                filterResults.values = tempList;
+                filterResults.count = tempList.size();
+            } else{
+                filterResults.values = arrayContactos;
+                filterResults.count = arrayContactos.size();
+            }
+            return filterResults;
+        }
+
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            arrayContactosFiltrado = (ArrayList<Contacto>) results.values;
+
+            for(int i = 0; i < arrayContactosFiltrado.size(); i++){
+                Log.d("Contacto filtrado", arrayContactosFiltrado.get(i).toString());
+            }
+            Log.d("-----", "------------------------------------------------------------------");
+            for(int i = 0; i < arrayContactos.size(); i++){
+                Log.d("Contacto", arrayContactos.get(i).toString());
+            }
+            notifyDataSetChanged();
+        }
+    };
+
+    @Override
+    public Filter getFilter() {
+        return myFilter;
     }
 }
