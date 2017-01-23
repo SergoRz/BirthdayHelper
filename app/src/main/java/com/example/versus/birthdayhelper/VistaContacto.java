@@ -1,7 +1,11 @@
 package com.example.versus.birthdayhelper;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
@@ -35,5 +39,14 @@ public class VistaContacto extends AppCompatActivity {
         }
 
         etMensaje.setText(contacto.getMensaje());
+    }
+
+    public void selectContact(View v){
+        Intent contactIntent = new Intent(Intent.ACTION_VIEW);
+
+        contactIntent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+        contactIntent.putExtra(ContactsContract.Intents.Insert.NAME, etNombre.getText());
+        contactIntent.putExtra(ContactsContract.Intents.Insert.PHONE,etTelf.getText());
+        startActivity(contactIntent);
     }
 }

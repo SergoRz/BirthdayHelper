@@ -44,14 +44,14 @@
                     android:ems="10"
                     android:id="@+id/etNombre"
                     android:layout_weight="0.12"
-                    android:editable="false"
                     android:enabled="false" />
 
                 <Button
                     android:text="..."
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/btnMas" />
+                    android:id="@+id/btnMas"
+                    android:onClick="selectContact" />
             </LinearLayout>
 
             <LinearLayout
@@ -92,7 +92,6 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/etTelf"
-            android:editable="false"
             android:enabled="false" />
 
     </LinearLayout>
