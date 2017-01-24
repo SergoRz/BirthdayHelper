@@ -1,5 +1,6 @@
 package com.example.versus.birthdayhelper;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -53,6 +54,12 @@ public class VistaContacto extends AppCompatActivity {
         intent.setData(dato);
         startActivity(intent);
     }
+
+    public void cambiarFecha(View v){
+        DialogFragment newFragment = new CalendarPicker();
+        newFragment.show(getFragmentManager(), "datePicker");
+    }
+
 
 
 }

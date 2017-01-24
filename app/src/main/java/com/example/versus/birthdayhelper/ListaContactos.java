@@ -28,7 +28,7 @@ public class ListaContactos extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     ArrayList<Contacto> arrayContactos;
-    SQLiteDatabase db;
+    static SQLiteDatabase db;
     ContactosDbHelper usdbh;
     TextView tvBusqueda;
     ListView lvContactos;

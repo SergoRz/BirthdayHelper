@@ -26,15 +26,14 @@ public class Timer extends DialogFragment implements TimePickerDialog.OnTimeSetL
         int hora = prefs.getInt("horaMensaje", 00);
         int minutos = prefs.getInt("minutosMensaje", 00);
 
-        //Create and return a new instance of TimePickerDialog
         return new TimePickerDialog(getActivity(),this, hora, minutos,
                 DateFormat.is24HourFormat(getActivity()));
     }
 
-    //onTimeSet() callback method
+
     public void onTimeSet(TimePicker view, int hourOfDay, int minute){
         SharedPreferences prefs = getActivity().getSharedPreferences("MisPreferencias", MODE_PRIVATE);
-        //Se editan las preferencias
+
         SharedPreferences.Editor editor = prefs.edit();
 
         editor.putInt("horaMensaje", hourOfDay);
