@@ -87,9 +87,9 @@ public class ListaContactos extends AppCompatActivity {
 
         int hora = prefs.getInt("horaMensaje", 00);
         int minutos = prefs.getInt("minutosMensaje", 00);
-
+/*
         alarma = new Alarma();
-        alarma.setAlarma(hora, minutos);
+        alarma.setAlarma(hora, minutos);*/
 
     }
 
