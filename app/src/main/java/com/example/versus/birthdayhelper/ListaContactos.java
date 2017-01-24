@@ -1,9 +1,7 @@
 package com.example.versus.birthdayhelper;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.DialogFragment;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -13,10 +11,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,7 +23,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class ListaContactos extends AppCompatActivity {
 
@@ -54,9 +49,6 @@ public class ListaContactos extends AppCompatActivity {
         obtenerContactos();
         arrayContactos = new ArrayList();
         arrayContactos = usdbh.cargarContactos(db);
-
-
-
 
         adaptador = new ContactoAdapter(this, arrayContactos); //Constructor del adaptador de la lista
 
@@ -88,6 +80,7 @@ public class ListaContactos extends AppCompatActivity {
                 // TODO Auto-generated method stub
             }
         });
+
     }
 
 
@@ -143,12 +136,6 @@ public class ListaContactos extends AppCompatActivity {
         MenuInflater infladorMenu = getMenuInflater();
         infladorMenu.inflate(R.menu.menu,menu);
         return super.onCreateOptionsMenu(menu);
-    }
-
-    public void cargarPreferencias(){
-        SharedPreferences prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
-
-        String horaMensaje = prefs.getString("horaMensaje", "00:00");
     }
 
     public void cambiarHora(){
