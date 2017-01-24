@@ -16,14 +16,11 @@ import android.widget.Toast;
 
 public class VistaContacto extends AppCompatActivity {
 
-    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private Contacto contacto;
     private EditText etNombre;
     private CheckBox cbSMS;
     private EditText etMensaje;
     private EditText etTelf;
-    private Uri contactUri;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +46,9 @@ public class VistaContacto extends AppCompatActivity {
         etMensaje.setText(contacto.getMensaje());
     }
 
-
     public void selectContact(View v) {
-        //String uri = "content://com.android.contacts/contacts" + etNombre.getText().toString();
-        //LA CONTACT_ID NO SE CORRESPONDE CON _ID, EN LA URI CREO QUE BUSCA POR CONTACT_ID
         Uri dato = Uri.parse("content://com.android.contacts/contacts/"  + String.valueOf(contacto.getId()));
-        Log.d("Contacto a buscar: ",String.valueOf(contacto.getId()));
+
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(dato);
         startActivity(intent);

@@ -89,19 +89,13 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> implements Filterabl
         protected void publishResults(CharSequence constraint, FilterResults results) {
             arrayContactosFiltrado = (ArrayList<Contacto>) results.values;
 
-            //Se muestra ambos array el original y el filtrado
-            /*
-            for(int i = 0; i < arrayContactosFiltrado.size(); i++){
-                Log.d("Contacto filtrado", arrayContactosFiltrado.get(i).toString());
-            }
-            Log.d("-----", "------------------------------------------------------------------");
-            for(int i = 0; i < arrayContactos.size(); i++){
-                Log.d("Contacto", arrayContactos.get(i).toString());
-            }*/
-
             notifyDataSetChanged();
         }
     };
+
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
 
     @Override
     public Filter getFilter() {

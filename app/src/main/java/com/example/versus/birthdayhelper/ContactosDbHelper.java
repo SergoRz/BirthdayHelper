@@ -1,5 +1,6 @@
 package com.example.versus.birthdayhelper;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -50,8 +51,15 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
         try {
             db.execSQL(sqlInsert);
         }catch(SQLiteException e){
-
+            updateContact(db, oContacto);
         }
+    }
+
+    public void updateContact(SQLiteDatabase db, Contacto oContacto){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ContactosContract.ContactoEntry.NOMBRE, oContacto.getNombre());
+        contentValues.put(ContactosContract.ContactoEntry.TELEFONO, oContacto.getTelefono());
+        db.update(ContactosContract.ContactoEntry.TABLE_NAME, contentValues, ContactosContract.ContactoEntry.ID + " = ?", new String[]{String.valueOf(oContacto.getId())});
     }
 
     public ArrayList<Contacto> cargarContactos(SQLiteDatabase db){
