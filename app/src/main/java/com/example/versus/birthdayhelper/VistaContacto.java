@@ -1,6 +1,7 @@
 package com.example.versus.birthdayhelper;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -52,4 +53,6 @@ public class VistaContacto extends AppCompatActivity {
         intent.setData(dato);
         startActivity(intent);
     }
+
+
 }

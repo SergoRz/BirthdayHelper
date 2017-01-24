@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -20,10 +22,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
-public class ListaContactos extends Activity {
+public class ListaContactos extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     ArrayList<Contacto> arrayContactos;
@@ -36,7 +37,6 @@ public class ListaContactos extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.principal);
-
 
         lvContactos = (ListView) findViewById(R.id.lvContactos);
         lvContactos.setTextFilterEnabled(true);
@@ -133,6 +133,7 @@ public class ListaContactos extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         // Inflamos el menú; añadimos los items al action bar si éste está presente.
         MenuInflater infladorMenu = getMenuInflater();
         infladorMenu.inflate(R.menu.menu,menu);
@@ -144,6 +145,7 @@ public class ListaContactos extends Activity {
 
         String horaMensaje = prefs.getString("horaMensaje", "00:00");
     }
+
 
 }
 
