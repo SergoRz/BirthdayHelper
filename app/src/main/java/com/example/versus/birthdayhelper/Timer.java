@@ -3,6 +3,7 @@ package com.example.versus.birthdayhelper;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by EmilioCB on 24/01/2017.
  */
@@ -18,23 +21,25 @@ import java.util.Calendar;
 public class Timer extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
-        //Use the current time as the default values for the time picker
-        final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
+        SharedPreferences prefs = getActivity().getSharedPreferences("MisPreferencias", MODE_PRIVATE);
+
+        int hora = prefs.getInt("horaMensaje", 00);
+        int minutos = prefs.getInt("minutosMensaje", 00);
 
         //Create and return a new instance of TimePickerDialog
-        return new TimePickerDialog(getActivity(),this, hour, minute,
+        return new TimePickerDialog(getActivity(),this, hora, minutos,
                 DateFormat.is24HourFormat(getActivity()));
     }
 
     //onTimeSet() callback method
     public void onTimeSet(TimePicker view, int hourOfDay, int minute){
+        SharedPreferences prefs = getActivity().getSharedPreferences("MisPreferencias", MODE_PRIVATE);
+        //Se editan las preferencias
+        SharedPreferences.Editor editor = prefs.edit();
 
-        Log.d("Hora", "Your chosen time is...\n");
-
-        Log.d("Hora", "Hour : " + String.valueOf(hourOfDay)
-                + "\nMinute : " + String.valueOf(minute) + "\n");
+        editor.putInt("horaMensaje", hourOfDay);
+        editor.putInt("minutosMensaje", minute);
+        editor.apply();
     }
 
 }
