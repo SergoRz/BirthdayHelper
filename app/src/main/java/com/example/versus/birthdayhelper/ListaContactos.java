@@ -2,6 +2,8 @@ package com.example.versus.birthdayhelper;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -14,15 +16,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ListaContactos extends AppCompatActivity {
 
@@ -146,6 +151,22 @@ public class ListaContactos extends AppCompatActivity {
         String horaMensaje = prefs.getString("horaMensaje", "00:00");
     }
 
+    public void cambiarHora(){
+        DialogFragment newFragment = new Timer();
+        newFragment.show(getFragmentManager(),"TimePicker");
+    }
+
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                cambiarHora();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }
 
