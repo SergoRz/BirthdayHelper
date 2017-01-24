@@ -2,6 +2,7 @@ package com.example.versus.birthdayhelper;
 
 import android.Manifest;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -87,7 +88,7 @@ public class ListaContactos extends AppCompatActivity {
 
         int hora = prefs.getInt("horaMensaje", 00);
         int minutos = prefs.getInt("minutosMensaje", 00);
-/*
+        /*
         alarma = new Alarma();
         alarma.setAlarma(hora, minutos);*/
 
@@ -163,6 +164,10 @@ public class ListaContactos extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public static Context getContext(){
+        return getContext();
     }
 
 }
