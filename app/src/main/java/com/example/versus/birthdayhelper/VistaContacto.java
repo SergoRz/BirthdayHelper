@@ -51,7 +51,7 @@ public class VistaContacto extends AppCompatActivity {
 
     public void selectContact(View v) {
         //String uri = "content://com.android.contacts/contacts" + etNombre.getText().toString();
-        //LA ID NO SE CORRESPONDE CON _ID, EN LA URI CREO QUE BUSCA POR _ID
+        //LA CONTACT_ID NO SE CORRESPONDE CON _ID, EN LA URI CREO QUE BUSCA POR CONTACT_ID
         Uri dato = Uri.parse("content://com.android.contacts/contacts/"  + String.valueOf(contacto.getId()));
         Log.d("Contacto a buscar: ",String.valueOf(contacto.getId()));
         Intent intent = new Intent(Intent.ACTION_VIEW);
