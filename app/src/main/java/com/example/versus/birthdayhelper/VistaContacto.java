@@ -1,9 +1,11 @@
 package com.example.versus.birthdayhelper;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +23,7 @@ public class VistaContacto extends AppCompatActivity {
     private CheckBox cbSMS;
     private EditText etMensaje;
     private EditText etTelf;
-
+    private EditText etCumple;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,12 +34,14 @@ public class VistaContacto extends AppCompatActivity {
         etMensaje = (EditText) findViewById(R.id.etMensaje);
         etMensaje = (EditText) findViewById(R.id.etMensaje);
         etTelf = (EditText) findViewById(R.id.etTelf);
+        etCumple = (EditText) findViewById(R.id.etCumple);
 
         Bundle extras = getIntent().getExtras();
         contacto = extras.getParcelable("contacto");
 
         etNombre.setText(contacto.getNombre());
         etTelf.setText(contacto.getTelefono());
+        etCumple.setText(contacto.getFechaNacimiento());
 
         if(contacto.getTipoNotif() == 's'){
             cbSMS.setChecked(true);
@@ -54,5 +58,15 @@ public class VistaContacto extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void guardarContact(View v){
+        ContactosDbHelper usdbh = new ContactosDbHelper(this);
+        SQLiteDatabase db = usdbh.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ContactosContract.ContactoEntry.FECHANACIMIENTO, etCumple.getText().toString());
+        //HAY QUE VALIDAR LA FECHA FORMATO DD/MM/AAAA PONER CALENDARIO MEJOR EN EL EDITTEXT DE CUMPLEAÑOS
+        contentValues.put(ContactosContract.ContactoEntry.MENSAJE, etMensaje.getText().toString());
+        db.update(ContactosContract.ContactoEntry.TABLE_NAME, contentValues, ContactosContract.ContactoEntry.ID + " = ?", new String[]{String.valueOf(contacto.getId())});
+    }
 
 }

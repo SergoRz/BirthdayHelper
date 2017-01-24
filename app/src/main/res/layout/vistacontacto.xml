@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -34,7 +35,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tvNombre"
-                    android:layout_weight="0.07" />
+                    android:layout_weight="0.07"
+                    android:textStyle="normal|bold" />
 
                 <EditText
                     android:layout_width="100dp"
@@ -84,7 +86,8 @@
             android:layout_width="110dp"
             android:layout_height="match_parent"
             android:id="@+id/tvTelefono"
-            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title" />
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+            android:textStyle="normal|bold" />
 
         <EditText
             android:layout_width="142dp"
@@ -104,11 +107,20 @@
 
         <TextView
             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-            android:text="Fecha de nacimiento:"
+            android:text="Cumpleaños:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView3"
-            android:layout_weight="1" />
+            android:layout_weight="0.01"
+            android:textStyle="normal|bold" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etCumple"
+            android:layout_weight="0.01" />
 
 
     </LinearLayout>
@@ -124,7 +136,8 @@
             android:text="Mensaje:"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvMensaje" />
+            android:id="@+id/tvMensaje"
+            android:textStyle="normal|bold" />
 
         <EditText
             android:layout_width="match_parent"
@@ -141,5 +154,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnGuardar"
-        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title" />
+        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+        android:layout_weight="0.27" />
 </LinearLayout>
