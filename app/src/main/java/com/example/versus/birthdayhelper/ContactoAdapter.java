@@ -88,7 +88,6 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> implements Filterabl
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             arrayContactosFiltrado = (ArrayList<Contacto>) results.values;
-
             notifyDataSetChanged();
         }
     };
