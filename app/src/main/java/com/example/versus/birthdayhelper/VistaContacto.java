@@ -1,17 +1,21 @@
 package com.example.versus.birthdayhelper;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class VistaContacto extends AppCompatActivity {
 
+    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private Contacto contacto;
     private EditText etNombre;
     private CheckBox cbSMS;
@@ -44,12 +48,14 @@ public class VistaContacto extends AppCompatActivity {
         etMensaje.setText(contacto.getMensaje());
     }
 
-    public void selectContact(View v) {
-        contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI, etNombre.getText().toString());
-        Intent intent = new Intent(Intent.ACTION_VIEW, contactUri);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        }
-    }
 
+    public void selectContact(View v) {
+        //String uri = "content://com.android.contacts/contacts" + etNombre.getText().toString();
+        //LA ID NO SE CORRESPONDE CON _ID, EN LA URI CREO QUE BUSCA POR _ID
+        Uri dato = Uri.parse("content://com.android.contacts/contacts/"  + String.valueOf(contacto.getId()));
+        Log.d("Contacto a buscar: ",String.valueOf(contacto.getId()));
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(dato);
+        startActivity(intent);
+    }
 }

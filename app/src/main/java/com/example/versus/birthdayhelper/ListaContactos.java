@@ -43,26 +43,19 @@ public class ListaContactos extends Activity {
         usdbh = new ContactosDbHelper(this);
         db = usdbh.getWritableDatabase();
 
-        /*
-        if(db != null){
-            Log.d("BD","Se ha abierto correctamente");
-        } else{
-            Log.d("BD","No se ha abierto correctamente");
-        }*/
-
         obtenerContactos();
         arrayContactos = new ArrayList();
         arrayContactos = usdbh.cargarContactos(db);
 
-        /*
-        for(int i = 0; i < arrayContactos.size(); i++){
-            Log.d("Contacto", arrayContactos.get(i).toString());
-        }*/
+
+
 
         adaptador = new ContactoAdapter(this, arrayContactos); //Constructor del adaptador de la lista
 
         lvContactos.setAdapter(adaptador); //Se le asigna el adaptador a la lista
-
+        for(int i = 0; i < arrayContactos.size(); i++){
+            Log.d("Contacto", arrayContactos.get(i).toString());
+        }
         lvContactos.setOnItemClickListener(new AdapterView.OnItemClickListener(){ //Listener para cuando se haga click sobre un item de la lista
             public void onItemClick(AdapterView<?> adapter, View view, int position, long id){ //Cuando se haga click en un item de la lista..
                verContacto(position);
@@ -97,7 +90,7 @@ public class ListaContactos extends Activity {
             //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
         }
         else{
-           String[] projeccion = new String[]{ContactsContract.Data._ID, ContactsContract.Data.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE};
+           String[] projeccion = new String[]{ContactsContract.Data.CONTACT_ID, ContactsContract.Data.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE};
         String selectionClause = ContactsContract.Data.MIMETYPE + "='" +
                 ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE + "' AND "
                 + ContactsContract.CommonDataKinds.Phone.NUMBER + " IS NOT NULL";
