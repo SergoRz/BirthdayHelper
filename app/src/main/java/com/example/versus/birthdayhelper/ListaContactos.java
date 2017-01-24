@@ -3,6 +3,7 @@ package com.example.versus.birthdayhelper;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +13,8 @@ import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -128,6 +131,19 @@ public class ListaContactos extends Activity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflamos el menú; añadimos los items al action bar si éste está presente.
+        MenuInflater infladorMenu = getMenuInflater();
+        infladorMenu.inflate(R.menu.menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public void cargarPreferencias(){
+        SharedPreferences prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
+
+        String horaMensaje = prefs.getString("horaMensaje", "00:00");
+    }
 
 }
 
