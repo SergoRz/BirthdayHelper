@@ -9,7 +9,7 @@ import java.util.Calendar;
 
 public class Alarma extends Activity{
 
-    public void SetAlarma(int hora, int min){
+    public void setAlarma(int hora, int min){
         AlarmManager alarmMgr;
         PendingIntent alarmIntent;
 

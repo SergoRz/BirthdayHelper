@@ -33,6 +33,7 @@ public class ListaContactos extends AppCompatActivity {
     TextView tvBusqueda;
     ListView lvContactos;
     ContactoAdapter adaptador;
+    Alarma alarma;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -80,6 +81,15 @@ public class ListaContactos extends AppCompatActivity {
                 // TODO Auto-generated method stub
             }
         });
+
+
+        SharedPreferences prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
+
+        int hora = prefs.getInt("horaMensaje", 00);
+        int minutos = prefs.getInt("minutosMensaje", 00);
+
+        alarma = new Alarma();
+        alarma.setAlarma(hora, minutos);
 
     }
 

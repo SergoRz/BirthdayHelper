@@ -72,8 +72,17 @@ public class VistaContacto extends AppCompatActivity {
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(ContactosContract.ContactoEntry.FECHANACIMIENTO, etFecha.getText().toString());
-        //HAY QUE VALIDAR LA FECHA FORMATO DD/MM/AAAA PONER CALENDARIO MEJOR EN EL EDITTEXT DE CUMPLEAÑOS
+
+        String not;
+        if(cbSMS.isChecked()){
+            not = "s";
+        }
+        else{
+            not = "n";
+        }
         contentValues.put(ContactosContract.ContactoEntry.MENSAJE, etMensaje.getText().toString());
+
+        contentValues.put(ContactosContract.ContactoEntry.TIPONOTIF, not);
         db.update(ContactosContract.ContactoEntry.TABLE_NAME, contentValues, ContactosContract.ContactoEntry.ID + " = ?", new String[]{String.valueOf(contacto.getId())});
     }
 
