@@ -109,11 +109,33 @@ public class ListaContactos extends AppCompatActivity {
         }
     }
 
+    /**
+     * Metodo que se ejecuta cuando hacemos clic en uno de los contactos de la lista
+     * El metodo nos lleva a otra Activity (VistaContacto) donde se ven los detalles del contacto
+     * @param position Posicion del contacto en el ListView
+     */
     public void verContacto(int position){
+        // Intent hacia la nueva Activity
         Intent intent = new Intent(this, VistaContacto.class);
+        //Seleccionamos el contacto que elegimos
         Contacto contacto = arrayContactos.get(position);
+        //Pasamos el contacto a la nueva activity
         intent.putExtra("contacto", contacto);
+        //Se inicia la activity
         startActivity(intent);
+    }
+
+
+    public void cambiarHora(){
+        DialogFragment newFragment = new Timer();
+        newFragment.show(getFragmentManager(),"TimePicker");
+
+        SharedPreferences prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
+
+        int hora = prefs.getInt("horaMensaje", 00);
+        int minutos = prefs.getInt("minutosMensaje", 00);
+
+        alarma.setAlarma(this, hora, minutos);
     }
 
     /**
@@ -148,18 +170,6 @@ public class ListaContactos extends AppCompatActivity {
         MenuInflater infladorMenu = getMenuInflater();
         infladorMenu.inflate(R.menu.menu,menu);
         return super.onCreateOptionsMenu(menu);
-    }
-
-    public void cambiarHora(){
-        DialogFragment newFragment = new Timer();
-        newFragment.show(getFragmentManager(),"TimePicker");
-
-        SharedPreferences prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
-
-        int hora = prefs.getInt("horaMensaje", 00);
-        int minutos = prefs.getInt("minutosMensaje", 00);
-
-        alarma.setAlarma(this, hora, minutos);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
