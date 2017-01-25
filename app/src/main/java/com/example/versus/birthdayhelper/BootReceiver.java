@@ -3,7 +3,6 @@ package com.example.versus.birthdayhelper;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 
 /**
  * This BroadcastReceiver automatically (re)starts the alarm when the device is

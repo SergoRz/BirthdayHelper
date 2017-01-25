@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.NotificationCompat;
+import android.telephony.SmsManager;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -31,7 +32,9 @@ public class NotificacionService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        Log.d("Servicio ", "iniciado");
         sendNotification();
+        Alarma.completeWakefulIntent(intent);
     }
 
     // Post a notification indicating whether a doodle was found.
@@ -52,15 +55,19 @@ public class NotificacionService extends IntentService {
         NotificationManager notif = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notif.notify(100, mBuilder.build());
 
-        sendSMS(oContactoS);
+        sendSMS(oContactoE);
     }
 
     public void sendSMS(Contacto oContacto) {
+        /*
         Intent smsIntent = new Intent(android.content.Intent.ACTION_SEND);
         smsIntent.setType("vnd.android-dir/mms-sms");
         smsIntent.putExtra("address",oContacto.getTelefono());
         smsIntent.putExtra("sms_body",oContacto.getMensaje());
-        startActivity(smsIntent);
+        startActivity(smsIntent);*/
+
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(oContacto.getTelefono(),null,oContacto.getMensaje(),null,null);
     }
 }
 

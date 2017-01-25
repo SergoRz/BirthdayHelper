@@ -29,6 +29,7 @@ public class ListaContactos extends AppCompatActivity {
     Alarma alarma = new Alarma();
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private static final int PERMISSIONS_REQUEST_SEND_SMS = 100;
+    private static final int PERMISSIONS_REQUEST_WAKE_LOCK = 100;
     ArrayList<Contacto> arrayContactos; //ArrayList de contactos
     static SQLiteDatabase db; //Base de datos de los contactos
     ContactosDbHelper usdbh; //Clase que se encarga de la base de datos
@@ -66,6 +67,7 @@ public class ListaContactos extends AppCompatActivity {
             }
         });
 
+        pedirPermisos();
         alarma.setAlarma(this, 00, 00); //Se establece la alarma a las 00:00
     }
 
@@ -160,7 +162,6 @@ public class ListaContactos extends AppCompatActivity {
         alarma.setAlarma(this, hora, minutos);
     }
 
-
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
@@ -169,6 +170,13 @@ public class ListaContactos extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void pedirPermisos(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.SEND_SMS}, PERMISSIONS_REQUEST_SEND_SMS);
+            //Se espera el callback del metodo onRequestPermissionsResult(int, String[], int[])
         }
     }
 }

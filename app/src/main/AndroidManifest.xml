@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -26,5 +27,6 @@
                 <action android:name="android.provider.Telephony.SEND_SMS" />
             </intent-filter>
         </receiver>
+        <service android:name=".NotificacionService"></service>
     </application>
 </manifest>
