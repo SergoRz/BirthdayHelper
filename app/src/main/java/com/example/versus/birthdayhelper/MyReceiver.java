@@ -24,7 +24,7 @@ public class MyReceiver extends BroadcastReceiver {
         String hora=horaActual.getHours()+ " " +horaActual.getMinutes();
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
-        mBuilder.setSmallIcon(android.R.drawable.stat_sys_warning);
+        mBuilder.setSmallIcon(android.R.drawable.btn_star);
         mBuilder.setLargeIcon((((BitmapDrawable) context.getResources().getDrawable(R.drawable.notif)).getBitmap()));
         mBuilder.setContentTitle("BirthDay Helper");
         mBuilder.setContentText(hora);
