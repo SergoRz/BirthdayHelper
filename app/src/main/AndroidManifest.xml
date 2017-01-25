@@ -20,11 +20,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".VistaContacto" />
-        <receiver android:name=".MyReceiver" android:permission="android.permission.BROADCAST_SMS" android:exported="true">
+        <receiver android:name=".MyReceiver" android:exported="true">
             <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_SENT" />
+                <action android:name="android.provider.Telephony.SEND_SMS" />
             </intent-filter>
         </receiver>
     </application>
-
 </manifest>

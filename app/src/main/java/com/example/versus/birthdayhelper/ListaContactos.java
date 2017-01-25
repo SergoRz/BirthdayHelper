@@ -32,6 +32,7 @@ import java.util.Calendar;
 public class ListaContactos extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
+    private static final int PERMISSIONS_REQUEST_SEND_SMS = 100;
     ArrayList<Contacto> arrayContactos;
     static SQLiteDatabase db;
     ContactosDbHelper usdbh;
@@ -42,6 +43,12 @@ public class ListaContactos extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.principal);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.SEND_SMS}, PERMISSIONS_REQUEST_SEND_SMS);
+            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
+        }
+
+
         SharedPreferences prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
 
         int hora = prefs.getInt("horaMensaje", 00);
@@ -53,7 +60,7 @@ public class ListaContactos extends AppCompatActivity {
         lvContactos = (ListView) findViewById(R.id.lvContactos);
         lvContactos.setTextFilterEnabled(true);
 
-        tvBusqueda = (TextView) findViewById(R.id.tvBusqueda);
+
 
         usdbh = new ContactosDbHelper(this);
         db = usdbh.getWritableDatabase();
@@ -70,6 +77,8 @@ public class ListaContactos extends AppCompatActivity {
                verContacto(position);
             }
         });
+        /*
+        tvBusqueda = (TextView) findViewById(R.id.tvBusqueda);
 
         tvBusqueda.addTextChangedListener(new TextWatcher() {
 
@@ -88,34 +97,32 @@ public class ListaContactos extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
             }
-        });
+        });*/
     }
 
-
     private void obtenerContactos(){
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
             //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
         }
         else{
-           String[] projeccion = new String[]{ContactsContract.Data.CONTACT_ID, ContactsContract.Data.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE};
-        String selectionClause = ContactsContract.Data.MIMETYPE + "='" +
-                ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE + "' AND "
-                + ContactsContract.CommonDataKinds.Phone.NUMBER + " IS NOT NULL";
-        String sortOrder = ContactsContract.Data.DISPLAY_NAME + " ASC";
+            String[] projeccion = new String[]{ContactsContract.Data.CONTACT_ID, ContactsContract.Data.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE};
+            String selectionClause = ContactsContract.Data.MIMETYPE + "='" +
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE + "' AND "
+                    + ContactsContract.CommonDataKinds.Phone.NUMBER + " IS NOT NULL";
+            String sortOrder = ContactsContract.Data.DISPLAY_NAME + " ASC";
 
-        Cursor c = getContentResolver().query(
-                ContactsContract.Data.CONTENT_URI,
-                projeccion,
-                selectionClause,
-                null,
-                sortOrder);
-        while (c.moveToNext()) {
-            Contacto contacto = new Contacto(Integer.valueOf(c.getString(0)), c.getString(1), c.getString(2), null, '\u0000', null);
-            usdbh.insert(db, contacto);
-        }
-        c.close();
+            Cursor c = getContentResolver().query(
+                    ContactsContract.Data.CONTENT_URI,
+                    projeccion,
+                    selectionClause,
+                    null,
+                    sortOrder);
+            while (c.moveToNext()) {
+                Contacto contacto = new Contacto(Integer.valueOf(c.getString(0)), c.getString(1), c.getString(2), null, '\u0000', null);
+                usdbh.insert(db, contacto);
+            }
+            c.close();
         }
     }
 
@@ -135,11 +142,17 @@ public class ListaContactos extends AppCompatActivity {
                 Toast.makeText(this, "Hasta que no aceptes los permisos no podremos mostrar los contactos", Toast.LENGTH_SHORT).show();
             }
         }
+        if (requestCode == PERMISSIONS_REQUEST_SEND_SMS) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                Toast.makeText(this, "Hasta que no aceptes los permisos no podremos enviar SMS automaticamente", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         // Inflamos el menú; añadimos los items al action bar si éste está presente.
         MenuInflater infladorMenu = getMenuInflater();
         infladorMenu.inflate(R.menu.menu,menu);
@@ -171,19 +184,19 @@ public class ListaContactos extends AppCompatActivity {
     }
 
     public void setAlarma(int hora, int min){
-        AlarmManager alarmMgr;
-        PendingIntent alarmIntent;
 
+
+        Intent intent = new Intent(getApplicationContext(), MyReceiver.class);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmMgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, hora);
         calendar.set(Calendar.MINUTE, min);
         calendar.set(Calendar.SECOND, 00);
-        Intent intent = new Intent(this, MyReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
-        alarmMgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, alarmIntent);
+        alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),alarmIntent);
     }
 
 

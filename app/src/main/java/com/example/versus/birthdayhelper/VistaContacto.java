@@ -62,8 +62,6 @@ public class VistaContacto extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(dato);
         startActivity(intent);
-
-
     }
 
     public void cambiarFecha(View v){
