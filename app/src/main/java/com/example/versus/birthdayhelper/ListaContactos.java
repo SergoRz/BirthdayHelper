@@ -10,14 +10,10 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,6 +27,7 @@ import java.util.Calendar;
 
 public class ListaContactos extends AppCompatActivity {
 
+    Alarma alarm = new Alarma();
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private static final int PERMISSIONS_REQUEST_SEND_SMS = 100;
     ArrayList<Contacto> arrayContactos;
@@ -43,24 +40,9 @@ public class ListaContactos extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.principal);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.SEND_SMS}, PERMISSIONS_REQUEST_SEND_SMS);
-            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
-        }
-
-
-        SharedPreferences prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
-
-        int hora = prefs.getInt("horaMensaje", 00);
-        int minutos = prefs.getInt("minutosMensaje", 00);
-
-        Log.d("Hora: ", hora + ":" + minutos);
-        setAlarma(hora, minutos);
 
         lvContactos = (ListView) findViewById(R.id.lvContactos);
         lvContactos.setTextFilterEnabled(true);
-
-
 
         usdbh = new ContactosDbHelper(this);
         db = usdbh.getWritableDatabase();
@@ -77,6 +59,19 @@ public class ListaContactos extends AppCompatActivity {
                verContacto(position);
             }
         });
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.SEND_SMS}, PERMISSIONS_REQUEST_SEND_SMS);
+            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
+        }
+
+        SharedPreferences prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
+
+        int hora = prefs.getInt("horaMensaje", 00);
+        int min = prefs.getInt("minutosMensaje", 00);
+
+        alarm.setAlarma(this, hora, min);
         /*
         tvBusqueda = (TextView) findViewById(R.id.tvBusqueda);
 
@@ -112,12 +107,7 @@ public class ListaContactos extends AppCompatActivity {
                     + ContactsContract.CommonDataKinds.Phone.NUMBER + " IS NOT NULL";
             String sortOrder = ContactsContract.Data.DISPLAY_NAME + " ASC";
 
-            Cursor c = getContentResolver().query(
-                    ContactsContract.Data.CONTENT_URI,
-                    projeccion,
-                    selectionClause,
-                    null,
-                    sortOrder);
+            Cursor c = getContentResolver().query(ContactsContract.Data.CONTENT_URI, projeccion, selectionClause, null, sortOrder);
             while (c.moveToNext()) {
                 Contacto contacto = new Contacto(Integer.valueOf(c.getString(0)), c.getString(1), c.getString(2), null, '\u0000', null);
                 usdbh.insert(db, contacto);
@@ -142,6 +132,7 @@ public class ListaContactos extends AppCompatActivity {
                 Toast.makeText(this, "Hasta que no aceptes los permisos no podremos mostrar los contactos", Toast.LENGTH_SHORT).show();
             }
         }
+
         if (requestCode == PERMISSIONS_REQUEST_SEND_SMS) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
@@ -166,9 +157,9 @@ public class ListaContactos extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
 
         int hora = prefs.getInt("horaMensaje", 00);
-        int minutos = prefs.getInt("minutosMensaje", 00);
+        int min = prefs.getInt("minutosMensaje", 00);
 
-        setAlarma(hora, minutos);
+        alarm.setAlarma(this, hora, min);
     }
 
 
@@ -182,23 +173,6 @@ public class ListaContactos extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    public void setAlarma(int hora, int min){
-
-
-        Intent intent = new Intent(getApplicationContext(), MyReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarmMgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, hora);
-        calendar.set(Calendar.MINUTE, min);
-        calendar.set(Calendar.SECOND, 00);
-
-        alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),alarmIntent);
-    }
-
 
 }
 
