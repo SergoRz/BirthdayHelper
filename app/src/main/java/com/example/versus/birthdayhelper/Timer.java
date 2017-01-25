@@ -14,9 +14,6 @@ import java.util.Calendar;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * Created by EmilioCB on 24/01/2017.
- */
 
 public class Timer extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
     @Override

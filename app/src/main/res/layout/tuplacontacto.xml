@@ -11,7 +11,7 @@
         android:padding="10dp">
 
         <ImageView
-            android:src="@mipmap/contacto"
+            android:src="@mipmap/ic_launcher"
             android:textSize="20dp"
             android:textStyle="bold"
             android:layout_width="wrap_content"

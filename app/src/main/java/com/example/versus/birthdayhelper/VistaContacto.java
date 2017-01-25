@@ -59,10 +59,11 @@ public class VistaContacto extends AppCompatActivity {
 
     public void selectContact(View v) {
         Uri dato = Uri.parse("content://com.android.contacts/contacts/"  + String.valueOf(contacto.getId()));
-
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(dato);
         startActivity(intent);
+
+
     }
 
     public void cambiarFecha(View v){

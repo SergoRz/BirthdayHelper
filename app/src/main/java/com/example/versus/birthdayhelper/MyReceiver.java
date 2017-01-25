@@ -1,13 +1,16 @@
 package com.example.versus.birthdayhelper;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -36,22 +39,26 @@ public class MyReceiver extends BroadcastReceiver {
         Contacto oContactoE = new Contacto(10, "Emilio", "628232938", "25/01/2017", 'n', "Hola Emilio, esto funciona dpm, Feliz Cumpleaños!");
         Contacto oContactoS = new Contacto(10, "Sergio", "665463077", "25/01/2017", 'n', "Hola Sergio, esto funciona dpm, Feliz Cumpleaños!");
         sendSMS(context, oContactoS);
-
     }
 
     public void sendSMS(android.content.Context context, Contacto oContacto) {
-        /*
-        Uri uri = Uri.parse("smsto:" + oContacto.getTelefono());
-        Intent it = new Intent(Intent.ACTION_SENDTO, uri);
-        it.putExtra("sms_body", oContacto.getMensaje());
-        context.startActivity(it);*/
-
-        /*
-        Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
-        smsIntent.setType("vnd.android-dir/mms-sms");
-        smsIntent.putExtra("address",oContacto.getTelefono());
-        smsIntent.putExtra("sms_body",oContacto.getMensaje());
-        context.startActivity(smsIntent);*/
+        PendingIntent _pendingIntent;
+        Intent _intent = new Intent();
+        _intent.setClass(context, this.getClass());
+        _intent.putExtra("test","test");
+        _pendingIntent = PendingIntent.getBroadcast(context, 0, _intent, 0);
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(oContacto.getTelefono(), null, oContacto.getMensaje(), _pendingIntent, null);
     }
 
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission is granted
+                sendSMS();
+            } else {
+                Toast.makeText(this, "Hasta que no aceptes los permisos no podremos mostrar los contactos", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }

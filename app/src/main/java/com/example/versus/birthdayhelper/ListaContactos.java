@@ -178,13 +178,14 @@ public class ListaContactos extends AppCompatActivity {
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, hora);
         calendar.set(Calendar.MINUTE, min);
-        calendar.set(Calendar.SECOND, 05);
-
+        calendar.set(Calendar.SECOND, 00);
         Intent intent = new Intent(this, MyReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
         alarmMgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, alarmIntent);
+        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, alarmIntent);
     }
+
+
 }
 
