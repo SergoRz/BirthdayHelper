@@ -184,9 +184,7 @@ public class ListaContactos extends AppCompatActivity {
         alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
         alarmMgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, AlarmManager.INTERVAL_DAY,calendar.getTimeInMillis(), alarmIntent);
     }
-
-
 }
 
