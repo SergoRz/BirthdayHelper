@@ -37,5 +37,4 @@ public class Timer extends DialogFragment implements TimePickerDialog.OnTimeSetL
         editor.putInt("minutosMensaje", minute);
         editor.apply();
     }
-
 }

@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -159,6 +160,7 @@ public class ListaContactos extends AppCompatActivity {
         int hora = prefs.getInt("horaMensaje", 00);
         int minutos = prefs.getInt("minutosMensaje", 00);
 
+        Log.d(String.valueOf(hora),String.valueOf(minutos));
         alarma.setAlarma(this, hora, minutos);
     }
 

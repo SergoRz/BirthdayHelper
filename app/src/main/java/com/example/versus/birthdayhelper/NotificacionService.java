@@ -59,13 +59,7 @@ public class NotificacionService extends IntentService {
     }
 
     public void sendSMS(Contacto oContacto) {
-        /*
-        Intent smsIntent = new Intent(android.content.Intent.ACTION_SEND);
-        smsIntent.setType("vnd.android-dir/mms-sms");
-        smsIntent.putExtra("address",oContacto.getTelefono());
-        smsIntent.putExtra("sms_body",oContacto.getMensaje());
-        startActivity(smsIntent);*/
-
+        Log.d("SMS","enviado");
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(oContacto.getTelefono(),null,oContacto.getMensaje(),null,null);
     }
