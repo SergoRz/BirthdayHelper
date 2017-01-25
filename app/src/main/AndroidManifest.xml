@@ -20,6 +20,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".VistaContacto" />
+        <receiver android:name=".MyReceiver" >
+            <intent-filter>
+                <action android:name=".ListaContactos.setAlarma" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

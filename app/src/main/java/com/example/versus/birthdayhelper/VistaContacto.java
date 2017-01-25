@@ -1,7 +1,10 @@
 package com.example.versus.birthdayhelper;
 
+import android.app.AlarmManager;
 import android.app.DialogFragment;
+import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -16,6 +19,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.Calendar;
 
 public class VistaContacto extends AppCompatActivity {
 
@@ -85,5 +90,7 @@ public class VistaContacto extends AppCompatActivity {
         contentValues.put(ContactosContract.ContactoEntry.TIPONOTIF, not);
         db.update(ContactosContract.ContactoEntry.TABLE_NAME, contentValues, ContactosContract.ContactoEntry.ID + " = ?", new String[]{String.valueOf(contacto.getId())});
     }
+
+
 
 }

@@ -35,7 +35,6 @@ public class CalendarPicker extends DialogFragment implements DatePickerDialog.O
             year = Integer.parseInt(fechas[2]);
             month = Integer.parseInt(fechas[1]) - 1;
             day = Integer.parseInt(fechas[0]);
-
         }
 
         // Create a new instance of DatePickerDialog and return it
