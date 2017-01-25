@@ -26,6 +26,7 @@ import java.util.Calendar;
 
 public class ListaContactos extends AppCompatActivity {
 
+    Alarma alarma = new Alarma();
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private static final int PERMISSIONS_REQUEST_SEND_SMS = 100;
     ArrayList<Contacto> arrayContactos; //ArrayList de contactos
@@ -47,8 +48,6 @@ public class ListaContactos extends AppCompatActivity {
         lvContactos = (ListView) findViewById(R.id.lvContactos); //Se enlaza el objeto ListView con el del layout
         usdbh = new ContactosDbHelper(this); //Se instancia la clase y se le pasa el contacto
 
-        setAlarma(00, 00); //Se establece la alarma a las 00:00
-
         db = usdbh.getWritableDatabase(); //Se obtiene la base de datos de la clase ContactosDbHelper
 
         obtenerContactos(); //Se obtienen los contactos del telefono
@@ -66,6 +65,8 @@ public class ListaContactos extends AppCompatActivity {
                verContacto(position); //Se abre un intent con los detalles del contacto
             }
         });
+
+        alarma.setAlarma(this, 00, 00); //Se establece la alarma a las 00:00
     }
 
     /**
@@ -94,12 +95,7 @@ public class ListaContactos extends AppCompatActivity {
             String sortOrder = ContactsContract.Data.DISPLAY_NAME + " ASC";
 
             //Se crea el cursor que va a recorrer los contactos
-            Cursor c = getContentResolver().query(
-                    ContactsContract.Data.CONTENT_URI,
-                    projeccion,
-                    selectionClause,
-                    null,
-                    sortOrder);
+            Cursor c = getContentResolver().query(ContactsContract.Data.CONTENT_URI, projeccion, selectionClause, null, sortOrder);
 
             while (c.moveToNext()) { //Mientras haya contactos...
                 //Se crea un nuevo contactos con los valores recogidos
@@ -161,7 +157,7 @@ public class ListaContactos extends AppCompatActivity {
         int hora = prefs.getInt("horaMensaje", 00);
         int minutos = prefs.getInt("minutosMensaje", 00);
 
-        setAlarma(hora, minutos);
+        alarma.setAlarma(this, hora, minutos);
     }
 
 
@@ -175,23 +171,5 @@ public class ListaContactos extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    public void setAlarma(int hora, int min){
-
-
-        Intent intent = new Intent(getApplicationContext(), MyReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarmMgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, hora);
-        calendar.set(Calendar.MINUTE, min);
-        calendar.set(Calendar.SECOND, 00);
-
-        alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),alarmIntent);
-    }
-
-
 }
 
