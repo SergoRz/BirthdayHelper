@@ -47,6 +47,7 @@ public class ListaContactos extends AppCompatActivity {
         int hora = prefs.getInt("horaMensaje", 00);
         int minutos = prefs.getInt("minutosMensaje", 00);
 
+        Log.d("Hora: ", hora + ":" + minutos);
         setAlarma(hora, minutos);
 
         lvContactos = (ListView) findViewById(R.id.lvContactos);
@@ -64,9 +65,6 @@ public class ListaContactos extends AppCompatActivity {
         adaptador = new ContactoAdapter(this, arrayContactos); //Constructor del adaptador de la lista
 
         lvContactos.setAdapter(adaptador); //Se le asigna el adaptador a la lista
-        for(int i = 0; i < arrayContactos.size(); i++){
-            Log.d("Contacto", arrayContactos.get(i).toString());
-        }
         lvContactos.setOnItemClickListener(new AdapterView.OnItemClickListener(){ //Listener para cuando se haga click sobre un item de la lista
             public void onItemClick(AdapterView<?> adapter, View view, int position, long id){ //Cuando se haga click en un item de la lista..
                verContacto(position);

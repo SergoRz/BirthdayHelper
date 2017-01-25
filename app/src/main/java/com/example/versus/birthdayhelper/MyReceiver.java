@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -24,6 +25,7 @@ public class MyReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
         mBuilder.setSmallIcon(android.R.drawable.stat_sys_warning);
+        mBuilder.setLargeIcon((((BitmapDrawable) context.getResources().getDrawable(R.drawable.notif)).getBitmap()));
         mBuilder.setContentTitle("BirthDay Helper");
         mBuilder.setContentText(hora);
 
@@ -51,4 +53,5 @@ public class MyReceiver extends BroadcastReceiver {
         smsIntent.putExtra("sms_body",oContacto.getMensaje());
         context.startActivity(smsIntent);*/
     }
+
 }
