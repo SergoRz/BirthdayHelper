@@ -11,9 +11,6 @@ import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
-/**
- * Created by EmilioCB on 24/01/2017.
- */
 
 public class CalendarPicker extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
@@ -47,7 +44,6 @@ public class CalendarPicker extends DialogFragment implements DatePickerDialog.O
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         fecha = (EditText) getActivity().findViewById(R.id.etFecha);
-
         fecha.setText(day + "/" + (month + 1) + "/" + year);
     }
 }
