@@ -10,21 +10,16 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,96 +28,86 @@ public class ListaContactos extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private static final int PERMISSIONS_REQUEST_SEND_SMS = 100;
-    ArrayList<Contacto> arrayContactos;
-    static SQLiteDatabase db;
-    ContactosDbHelper usdbh;
-    TextView tvBusqueda;
-    ListView lvContactos;
-    ContactoAdapter adaptador;
+    ArrayList<Contacto> arrayContactos; //ArrayList de contactos
+    static SQLiteDatabase db; //Base de datos de los contactos
+    ContactosDbHelper usdbh; //Clase que se encarga de la base de datos
+    ListView lvContactos; //ListView de la lista de contactos
+    ContactoAdapter adaptador; //Adaptador del ListView
 
+    /**
+     * Metodo que se ejecuta al iniciar la Activity
+     * Carga los contactos del telefono en la base de datos y despues carga el ListView de contactos desde la base
+     * de datos.
+     * @param savedInstanceState
+     */
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.principal);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.SEND_SMS}, PERMISSIONS_REQUEST_SEND_SMS);
-            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
-        }
 
+        lvContactos = (ListView) findViewById(R.id.lvContactos); //Se enlaza el objeto ListView con el del layout
+        usdbh = new ContactosDbHelper(this); //Se instancia la clase y se le pasa el contacto
 
-        SharedPreferences prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
+        setAlarma(00, 00); //Se establece la alarma a las 00:00
 
-        int hora = prefs.getInt("horaMensaje", 00);
-        int minutos = prefs.getInt("minutosMensaje", 00);
+        db = usdbh.getWritableDatabase(); //Se obtiene la base de datos de la clase ContactosDbHelper
 
-        Log.d("Hora: ", hora + ":" + minutos);
-        setAlarma(hora, minutos);
-
-        lvContactos = (ListView) findViewById(R.id.lvContactos);
-        lvContactos.setTextFilterEnabled(true);
-
-
-
-        usdbh = new ContactosDbHelper(this);
-        db = usdbh.getWritableDatabase();
-
-        obtenerContactos();
-        arrayContactos = new ArrayList();
+        obtenerContactos(); //Se obtienen los contactos del telefono
+        arrayContactos = new ArrayList<Contacto>(); //Se instancia el ArrayList de contactos
+        //Se rellena el ArrayList de contactos con los contactos de la base de datos
         arrayContactos = usdbh.cargarContactos(db);
 
         adaptador = new ContactoAdapter(this, arrayContactos); //Constructor del adaptador de la lista
 
         lvContactos.setAdapter(adaptador); //Se le asigna el adaptador a la lista
-        lvContactos.setOnItemClickListener(new AdapterView.OnItemClickListener(){ //Listener para cuando se haga click sobre un item de la lista
-            public void onItemClick(AdapterView<?> adapter, View view, int position, long id){ //Cuando se haga click en un item de la lista..
-               verContacto(position);
+        //Listener para cuando se haga click sobre un contacto de la lista
+        lvContactos.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            //Cuando se haga click en un contacto de la lista..
+            public void onItemClick(AdapterView<?> adapter, View view, int position, long id){
+               verContacto(position); //Se abre un intent con los detalles del contacto
             }
         });
-        /*
-        tvBusqueda = (TextView) findViewById(R.id.tvBusqueda);
-
-        tvBusqueda.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // TODO Auto-generated method stub
-                adaptador.getFilter().filter(s);
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-            }
-        });*/
     }
 
+    /**
+     * Metodo que se encarga de cargar los contactos del telefono en la base de datos SQLite.
+     * Para ello es necesario pedir permisos al usuario en tiempo de ejecucion.
+     * Una vez dados los permisos se crea un cursor, el cual va a recorrer los contactos, y los va
+     * a introducir en la base de datos,
+     */
     private void obtenerContactos(){
+        // Si no hay permiso de leer los contactos..
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
-            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
+            //Se espera el callback del metodo onRequestPermissionsResult(int, String[], int[])
         }
-        else{
-            String[] projeccion = new String[]{ContactsContract.Data.CONTACT_ID, ContactsContract.Data.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE};
+        else{ //Si hay permiso para leer los contactos...
+
+            //Permite seleccionar en un Array los atributos que queremos recibir de cada contacto, para ello se utiliza la clase ContactsContract
+            String[] projeccion = new String[]{ContactsContract.Data.CONTACT_ID, ContactsContract.Data.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER};
+
+            //Condicion de busqueda
             String selectionClause = ContactsContract.Data.MIMETYPE + "='" +
                     ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE + "' AND "
                     + ContactsContract.CommonDataKinds.Phone.NUMBER + " IS NOT NULL";
+
+            //Permite ordenar los contactos por orden ascendente
             String sortOrder = ContactsContract.Data.DISPLAY_NAME + " ASC";
 
+            //Se crea el cursor que va a recorrer los contactos
             Cursor c = getContentResolver().query(
                     ContactsContract.Data.CONTENT_URI,
                     projeccion,
                     selectionClause,
                     null,
                     sortOrder);
-            while (c.moveToNext()) {
+
+            while (c.moveToNext()) { //Mientras haya contactos...
+                //Se crea un nuevo contactos con los valores recogidos
                 Contacto contacto = new Contacto(Integer.valueOf(c.getString(0)), c.getString(1), c.getString(2), null, '\u0000', null);
-                usdbh.insert(db, contacto);
+
+                usdbh.insert(db, contacto); //Se inserta el contacto en la base de datos
             }
-            c.close();
+            c.close(); //Se cierra el cursor
         }
     }
 
@@ -133,16 +118,24 @@ public class ListaContactos extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Metodo que se ejecuta cuando es necesario dar permisos a la aplicacion.
+     * Se ejecuta para dar permisos de lectura de contactos.
+     * @param requestCode Codigo del permiso que se solicita
+     * @param permissions Permisos solicitados
+     * @param grantResults Resultado que se obtiene por parte del usuario
+     */
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission is granted
-                obtenerContactos();
-            } else {
+        if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) { //Si se solicita leer los contactos..
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) { //Si el usuario permite la lectura de contactos..
+                obtenerContactos(); //Se obtienen los contactos
+            } else { //Si no..
+                //Se informa al usuario
                 Toast.makeText(this, "Hasta que no aceptes los permisos no podremos mostrar los contactos", Toast.LENGTH_SHORT).show();
             }
         }
-        if (requestCode == PERMISSIONS_REQUEST_SEND_SMS) {
+
+        if (requestCode == PERMISSIONS_REQUEST_SEND_SMS) { //Si se solicita mandar mensajes...
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
             } else {
