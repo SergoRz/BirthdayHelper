@@ -23,10 +23,12 @@
         <activity android:name=".VistaContacto" />
         <receiver android:name=".BootReceiver" android:exported="true"></receiver>
         <receiver android:name=".Alarma" android:exported="true">
+
+        </receiver>
+        <service android:name=".NotificacionService">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SEND_SMS" />
             </intent-filter>
-        </receiver>
-        <service android:name=".NotificacionService"></service>
+        </service>
     </application>
 </manifest>
