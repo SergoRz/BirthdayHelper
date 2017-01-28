@@ -59,10 +59,6 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> implements Filterabl
 }
 
     /*
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-    }
-
     @Override
     public Filter getFilter() {
         return myFilter;
