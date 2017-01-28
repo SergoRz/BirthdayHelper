@@ -13,7 +13,10 @@ import android.widget.TimePicker;
 
 import static android.content.Context.MODE_PRIVATE;
 
-
+/**
+ * DataPickerDialog que se utiliza a la hora de querer cambiar la hora de notificacion
+ * Nos permite establecer una nueva hora de notificacion
+ */
 @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
 public class Timer extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
 

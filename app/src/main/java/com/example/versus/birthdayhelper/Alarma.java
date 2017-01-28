@@ -17,7 +17,9 @@ import android.util.Log;
 import java.util.Calendar;
 import java.util.Date;
 
-
+/**
+ *
+ */
 public class Alarma extends BroadcastReceiver {
 
     private AlarmManager alarmMgr;

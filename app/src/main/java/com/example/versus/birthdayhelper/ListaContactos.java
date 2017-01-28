@@ -20,6 +20,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
 
+/**
+ * Activity en la cual se muestra una lista de los contactos de la agenda telefonica, para
+ * poder navegar y acceder a ellos
+ */
 public class ListaContactos extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;

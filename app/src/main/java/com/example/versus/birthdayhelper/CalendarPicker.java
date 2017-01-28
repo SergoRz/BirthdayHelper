@@ -11,7 +11,10 @@ import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
-
+/**
+ * DataPickerDialog que se utiliza a la hora de querer cambiar la fecha de cumpleaños de un contacto
+ * Nos permite establecer una nueva fecha de cumpleaños
+ */
 public class CalendarPicker extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     EditText fecha;
