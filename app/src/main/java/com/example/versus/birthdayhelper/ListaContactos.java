@@ -166,19 +166,34 @@ public class ListaContactos extends AppCompatActivity {
         }
     }
 
+    /**
+     * Metodo sobrescrito que carga el menu de la parte superior de la pantalla
+     * Carga el layout que se ha descrito en la carpeta menu, dentro de la carpeta res
+     * Incorpora un solo item, que se depliega y ofrece un menu con la opcion de cambiar la hora
+     * de notificacion.
+     * @param menu Menu de la actionbar.
+     * @return Devuelve true o false si se ha ejecutado bien la operacion
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflamos el menú; añadimos los items al action bar si éste está presente.
+        // Inflamos el menú; añadimos los items al action bar.
         MenuInflater infladorMenu = getMenuInflater();
         infladorMenu.inflate(R.menu.menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Metodo que se realiza al hacer clic sobre una de las opciones del menu del action bar
+     * La unica opcion posible es la de cambiar la hora, al hacer clic en ella se ejecuta
+     * el metodo cambiarHora
+     * @param item Item sobre el que se hace clic
+     * @return Devuelve true o false si se ha ejecutado bien la operacion
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                cambiarHora();
+            case R.id.action_settings: //Si coincide con el boton de "Configurar Felicitaciones"..
+                cambiarHora(); //Se abre el dialog para cambiar la hora
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
