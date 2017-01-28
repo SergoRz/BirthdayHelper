@@ -14,7 +14,7 @@ import android.widget.EditText;
 
 public class CalendarPicker extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
-    EditText fecha;
+    private EditText fecha;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override

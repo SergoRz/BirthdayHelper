@@ -1,12 +1,8 @@
 package com.example.versus.birthdayhelper;
 
 import android.Manifest;
-import android.app.AlarmManager;
 import android.app.DialogFragment;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,7 +11,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,19 +19,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class ListaContactos extends AppCompatActivity {
 
-    //Alarma alarma = new Alarma(this);
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private static final int PERMISSIONS_REQUEST_SEND_SMS = 100;
     private static final int PERMISSIONS_REQUEST_WAKE_LOCK = 100;
-    ArrayList<Contacto> arrayContactos; //ArrayList de contactos
+    private ArrayList<Contacto> arrayContactos; //ArrayList de contactos
     static SQLiteDatabase db; //Base de datos de los contactos
-    ContactosDbHelper usdbh; //Clase que se encarga de la base de datos
-    ListView lvContactos; //ListView de la lista de contactos
-    ContactoAdapter adaptador; //Adaptador del ListView
+    private ContactosDbHelper usdbh; //Clase que se encarga de la base de datos
+    private ListView lvContactos; //ListView de la lista de contactos
+    private ContactoAdapter adaptador; //Adaptador del ListView
 
     /**
      * Metodo que se ejecuta al iniciar la Activity
@@ -70,7 +63,6 @@ public class ListaContactos extends AppCompatActivity {
         });
 
         pedirPermisos();
-        //alarma.setAlarma(14, 02); //Se establece la alarma a las 00:00
     }
 
     /**

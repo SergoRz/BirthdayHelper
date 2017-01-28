@@ -22,23 +22,40 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
             + ContactosContract.ContactoEntry.FECHANACIMIENTO + " VARCHAR(15) NULL,"
             + ContactosContract.ContactoEntry.NOMBRE + " VARCHAR(128) NOT NULL);";
 
+    /**
+     * Constructor de la clase ContactosDbHelper
+     * @param context Context de la activity donde es llamado
+     */
     public ContactosDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-
     }
 
+    /**
+     * Metodo sobrescrito que ejecuta  la sentencia sql de la creacion de la Base de Datos SQLite
+     * @param db Objeto de la Base de Datos
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(sqlCreate);
     }
 
+    /**
+     * Metodo sobrescrito que se utiliza cuando se actualiza la BD
+     * @param db Objeto de la Base de Datos.
+     * @param oldVersion Version antigua
+     * @param newVersion Version nueva
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
         db.execSQL("DROP TABLE IF EXISTS contactos");
         db.execSQL(sqlCreate);
     }
 
+    /**
+     * Metodo que permite insertar un Contacto en la Base de Datos
+     * @param db Objeto de la Base de Datos.
+     * @param oContacto Objeto de la clase Contacto.
+     */
     public void insert(SQLiteDatabase db, Contacto oContacto) {
         String sqlInsert = "INSERT INTO " + ContactosContract.ContactoEntry.TABLE_NAME + " VALUES("
                 + oContacto.getId()
@@ -54,6 +71,11 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Metodo que actualiza un contacto de la Base de Datos
+     * @param db Objeto de la Base de Datos.
+     * @param oContacto Objeto de la clase Contacto.
+     */
     public void updateContact(SQLiteDatabase db, Contacto oContacto){
         ContentValues contentValues = new ContentValues();
         contentValues.put(ContactosContract.ContactoEntry.NOMBRE, oContacto.getNombre());
@@ -61,6 +83,11 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
         db.update(ContactosContract.ContactoEntry.TABLE_NAME, contentValues, ContactosContract.ContactoEntry.ID + " = ?", new String[]{String.valueOf(oContacto.getId())});
     }
 
+    /**
+     * Metodo que obtiene los contactos de la Base de Datos y los guarda en un ArrayList de Contactos.
+     * @param db Objeto de la Base de Datos.
+     * @return Devuelve un ArrayList de Contactos.
+     */
     public ArrayList<Contacto> cargarContactos(SQLiteDatabase db){
         ArrayList<Contacto> arrayContactos = new ArrayList();
 

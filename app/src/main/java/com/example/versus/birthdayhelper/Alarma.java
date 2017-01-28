@@ -28,11 +28,8 @@ public class Alarma extends BroadcastReceiver {
         this.mContext = mContext;
     }
 
-    public Alarma(){}
-
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("Alarma ", "disparada");
         sendNotification();
     }
 
@@ -48,12 +45,7 @@ public class Alarma extends BroadcastReceiver {
         calendar.set(Calendar.MINUTE, min);
         calendar.set(Calendar.SECOND, 00);
 
-        Log.d(String.valueOf(hora), String.valueOf(min));
-        Log.d("Milis alarma: ", String.valueOf(calendar.getTimeInMillis()));
-        Log.d("Milis Actual: ", String.valueOf(System.currentTimeMillis()));
-
         alarmMgr.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
-        //sendSMS();
     }
 
     // ENVIA UNA NOTIFICACION DE PRUEBA

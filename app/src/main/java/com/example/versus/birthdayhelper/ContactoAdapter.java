@@ -1,7 +1,6 @@
 package com.example.versus.birthdayhelper;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +8,13 @@ import android.widget.ArrayAdapter;
 import android.widget.*;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-
 
 
 public class ContactoAdapter extends ArrayAdapter<Contacto> implements Filterable {
 
     private final Context contexto;
     private ArrayList<Contacto> arrayContactos;
-    private ArrayList<Contacto> arrayContactosFiltrado;
 
     /**
      * Constructor de la clase
@@ -29,32 +25,30 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> implements Filterabl
         super(context, R.layout.tuplacontacto, arrayContactos);
         this.contexto = context;
         this.arrayContactos = arrayContactos;
-        this.arrayContactosFiltrado = arrayContactos;
     }
 
     /**
-     * Metodo que se encarga de darle una disposicion de layout a la view.
+     * Metodo que se encarga de darle una disposición de layout a la view.
      * @param position Posicion del ArrayList en la que se encuentra
      * @param convertView
      * @param parent
      * @return Devuelve la disposicion de la view
      */
     public View getView(int position, View convertView, ViewGroup parent) {
-        View layoutContacto = null;
-
         LayoutInflater inflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE); //Se crea el LayoutInflater
 
-        layoutContacto = inflater.inflate(R.layout.tuplacontacto, parent, false); //Instancia el layout personalizado(fila) en esta Vista.
-        ImageView ivFoto = (ImageView) layoutContacto.findViewById(R.id.imageViewFoto);
-        TextView tvNombre = (TextView) layoutContacto.findViewById(R.id.textViewNombre); //TextView del titulo, se asocia con el del XML
-        TextView tvTelefono = (TextView) layoutContacto.findViewById(R.id.textViewNumero); //TextView del subtitulo, se asocia con el del XML
-        TextView tvAviso = (TextView) layoutContacto.findViewById(R.id.textViewAviso);
+        View layoutContacto = inflater.inflate(R.layout.tuplacontacto, parent, false); //Instancia el layout personalizado(tuplacontacto) en esta Vista.
+        ImageView ivFoto = (ImageView) layoutContacto.findViewById(R.id.imageViewFoto); //ImageView de la imagen, se asocia con el del XML
+        TextView tvNombre = (TextView) layoutContacto.findViewById(R.id.textViewNombre); //TextView del nombre, se asocia con el del XML
+        TextView tvTelefono = (TextView) layoutContacto.findViewById(R.id.textViewNumero); //TextView del numero, se asocia con el del XML
+        TextView tvAviso = (TextView) layoutContacto.findViewById(R.id.textViewAviso);//TextView del tipo de aviso, se asocia con el del XML
 
-        Contacto contactoActual = arrayContactosFiltrado.get(position); //Se recorren los titulares
+        Contacto contactoActual = arrayContactos.get(position); //Se recorren los contactos
 
-        tvNombre.setText(contactoActual.getNombre()); //Se recoge el titulo del titular en el que se encuentra
-        tvTelefono.setText(String.valueOf(contactoActual.getTelefono())); //Se recoge el subtitulo del titular en el que se encuentra
+        tvNombre.setText(contactoActual.getNombre()); //Se recoge el nombre del contacto en el que se encuentra
+        tvTelefono.setText(String.valueOf(contactoActual.getTelefono())); //Se recoge el telefono del contacto en el que se encuentra
 
+        //Dependiendo del valor del tipo de notifiacion se le asigna un valor u otro al tvAviso
         if (contactoActual.getTipoNotif() == 'n') tvAviso.setText("Aviso: Solo notificación");
         else tvAviso.setText("Aviso: Enviar SMS");
 
@@ -62,6 +56,17 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> implements Filterabl
     }
 
 
+}
+
+    /*
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return myFilter;
+    }
     private Filter myFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -90,14 +95,4 @@ public class ContactoAdapter extends ArrayAdapter<Contacto> implements Filterabl
             arrayContactosFiltrado = (ArrayList<Contacto>) results.values;
             notifyDataSetChanged();
         }
-    };
-
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-    }
-
-    @Override
-    public Filter getFilter() {
-        return myFilter;
-    }
-}
+    };*/

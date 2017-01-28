@@ -4,6 +4,9 @@ import android.provider.BaseColumns;
 
 public class ContactosContract {
 
+    /**
+     * Clase que implementa BaseColumns permite crear variables constantes para los campos de la BD
+     */
     public static abstract class ContactoEntry implements BaseColumns {
         public static final String TABLE_NAME ="contactos";
         public static final String ID = "id";

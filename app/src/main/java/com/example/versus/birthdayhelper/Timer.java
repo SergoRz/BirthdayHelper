@@ -13,7 +13,6 @@ import android.widget.TimePicker;
 
 import static android.content.Context.MODE_PRIVATE;
 
-
 @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
 public class Timer extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
 
@@ -30,7 +29,6 @@ public class Timer extends DialogFragment implements TimePickerDialog.OnTimeSetL
 
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute){
-        Alarma alarma = new Alarma(getActivity());
         SharedPreferences prefs = getActivity().getSharedPreferences("MisPreferencias", MODE_PRIVATE);
 
         SharedPreferences.Editor editor = prefs.edit();
@@ -38,6 +36,7 @@ public class Timer extends DialogFragment implements TimePickerDialog.OnTimeSetL
         editor.putInt("horaMensaje", hourOfDay);
         editor.putInt("minutosMensaje", minute);
         editor.apply();
+        Alarma alarma = new Alarma(getActivity());
         alarma.setAlarma(hourOfDay,minute);
     }
 }
