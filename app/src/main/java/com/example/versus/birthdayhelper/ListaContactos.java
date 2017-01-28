@@ -13,6 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -127,9 +128,13 @@ public class ListaContactos extends AppCompatActivity {
     }
 
 
+    /**
+     * Metodo que se encarga de abrir el Dialog para cambiar la hora
+     */
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     public void cambiarHora(){
-        DialogFragment newFragment = new Timer();
-        newFragment.show(getFragmentManager(),"TimePicker");
+        DialogFragment newFragment = new Timer(); //Se crea el DialogFragment
+        newFragment.show(getFragmentManager(),"TimePicker"); //Se muesrta el DialogFragment
     }
 
     /**
@@ -181,6 +186,7 @@ public class ListaContactos extends AppCompatActivity {
      * @param item Item sobre el que se hace clic
      * @return Devuelve true o false si se ha ejecutado bien la operacion
      */
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {

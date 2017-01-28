@@ -25,13 +25,23 @@ public class Contacto implements Parcelable {
                 '}';
     }
 
-    private int id;
-    private String nombre;
-    private String telefono;
-    private String fechaNacimiento;
+    private int id; //ID única para contacto
+    private String nombre; //Nombre del contacto
+    private String telefono; //Número de teléfono del contacto
+    private String fechaNacimiento; //Fecha de nacimiento del contacto
+    //Tipo de notificación que tiene asociado el contacto ya que puede ser enviar un SMS o solo notificar
     private char tipoNotif;
-    private String mensaje;
+    private String mensaje; //Mensaje que se le envía al contacto cuando es su cumpleaños
 
+    /**
+     * Constructor del contacto
+     * @param id ID del contacto
+     * @param nombre Nombre del contacto
+     * @param telefono Telefono del contacto
+     * @param fechaNacimiento //Fecha de nacimiento del contacto
+     * @param tipoNotif //Tipo de notificacion que se recibe
+     * @param mensaje //Mensaje de felicitacion
+     */
     public Contacto(int id,String nombre, String telefono, String fechaNacimiento, char tipoNotif, String mensaje) {
         this.id = id;
         this.nombre = nombre;
@@ -89,6 +99,10 @@ public class Contacto implements Parcelable {
         this.id = id;
     }
 
+    /**
+     * Constructos del contacto a partir de un Parcel
+     * @param in Parcel donde esta la informacion del contacto
+     */
     protected Contacto(Parcel in) {
         id = in.readInt();
         nombre = in.readString();
@@ -98,11 +112,12 @@ public class Contacto implements Parcelable {
         mensaje = in.readString();
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
+    /**
+     * Metodo que se encarga de pasar un contacto de tipo Contacto
+     * a tipo Parcel
+     * @param dest Parcel en el que se introduce
+     * @param flags
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -111,6 +126,11 @@ public class Contacto implements Parcelable {
         dest.writeString(fechaNacimiento);
         dest.writeValue(tipoNotif);
         dest.writeString(mensaje);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @SuppressWarnings("unused")

@@ -4,7 +4,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.text.format.DateFormat;
 import android.widget.TimePicker;
 
@@ -12,8 +14,9 @@ import android.widget.TimePicker;
 import static android.content.Context.MODE_PRIVATE;
 
 
+@RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
 public class Timer extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
-    private Alarma alarma = new Alarma(getActivity());;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         SharedPreferences prefs = getActivity().getSharedPreferences("MisPreferencias", MODE_PRIVATE);
@@ -27,6 +30,7 @@ public class Timer extends DialogFragment implements TimePickerDialog.OnTimeSetL
 
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute){
+        Alarma alarma = new Alarma(getActivity());
         SharedPreferences prefs = getActivity().getSharedPreferences("MisPreferencias", MODE_PRIVATE);
 
         SharedPreferences.Editor editor = prefs.edit();
