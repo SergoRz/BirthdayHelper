@@ -14,6 +14,7 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;//Contexto de acción para el helper.
     public static final String DATABASE_NAME = "miscumples.db";//Nombre del archivo con extensión .db
 
+    //Sentencia SQL que crea la tabla
     String sqlCreate = "CREATE TABLE " + ContactosContract.ContactoEntry.TABLE_NAME + " ("
             + ContactosContract.ContactoEntry.ID + " INTEGER PRIMARY KEY NOT NULL,"
             + ContactosContract.ContactoEntry.TIPONOTIF + " CHAR(1) NOT NULL,"
@@ -57,6 +58,7 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
      * @param oContacto Objeto de la clase Contacto.
      */
     public void insert(SQLiteDatabase db, Contacto oContacto) {
+        //Sentencia SQL  que inserta un contacto
         String sqlInsert = "INSERT INTO " + ContactosContract.ContactoEntry.TABLE_NAME + " VALUES("
                 + oContacto.getId()
                 + ",'n', "
@@ -65,8 +67,10 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
                 + "', null, '"
                 + oContacto.getNombre() + "')";
         try {
-            db.execSQL(sqlInsert);
+            db.execSQL(sqlInsert);//Se ejecuta la sentencia creada anteriormente
         }catch(SQLiteException e){
+            //En el caso de que se exista el contacto (Excepcion al intentar duplicar una PRIMARY KEY)
+            //Se actualiza el contacto
             updateContact(db, oContacto);
         }
     }
