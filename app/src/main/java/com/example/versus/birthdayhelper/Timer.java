@@ -6,7 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.widget.TimePicker;
 
 
@@ -14,6 +13,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 
 public class Timer extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
+    private Alarma alarma = new Alarma(getActivity());;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         SharedPreferences prefs = getActivity().getSharedPreferences("MisPreferencias", MODE_PRIVATE);
@@ -34,7 +34,6 @@ public class Timer extends DialogFragment implements TimePickerDialog.OnTimeSetL
         editor.putInt("horaMensaje", hourOfDay);
         editor.putInt("minutosMensaje", minute);
         editor.apply();
-
-        Log.d("Hora cambiada: ", String.valueOf(hourOfDay + ":" + minute));
+        alarma.setAlarma(hourOfDay,minute);
     }
 }

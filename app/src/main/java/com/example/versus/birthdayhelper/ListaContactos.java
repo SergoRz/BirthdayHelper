@@ -27,7 +27,7 @@ import java.util.Calendar;
 
 public class ListaContactos extends AppCompatActivity {
 
-    Alarma alarma = new Alarma();
+    //Alarma alarma = new Alarma(this);
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private static final int PERMISSIONS_REQUEST_SEND_SMS = 100;
     private static final int PERMISSIONS_REQUEST_WAKE_LOCK = 100;
@@ -69,7 +69,7 @@ public class ListaContactos extends AppCompatActivity {
         });
 
         pedirPermisos();
-        alarma.setAlarma(this, 00, 00); //Se establece la alarma a las 00:00
+        //alarma.setAlarma(14, 02); //Se establece la alarma a las 00:00
     }
 
     /**
@@ -130,14 +130,6 @@ public class ListaContactos extends AppCompatActivity {
     public void cambiarHora(){
         DialogFragment newFragment = new Timer();
         newFragment.show(getFragmentManager(),"TimePicker");
-
-        SharedPreferences prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
-
-        int hora = prefs.getInt("horaMensaje", 00);
-        int minutos = prefs.getInt("minutosMensaje", 00);
-
-        Log.d("Hora para cambiar: ", String.valueOf(hora + ":" + minutos));
-        alarma.setAlarma(this, hora, minutos);
     }
 
     /**
