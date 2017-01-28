@@ -5,8 +5,6 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
@@ -37,7 +35,11 @@ public class Alarma extends WakefulBroadcastReceiver {
         calendar.set(Calendar.MINUTE, min);
         calendar.set(Calendar.SECOND, 00);
 
-        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
+        Log.d(String.valueOf(hora), String.valueOf(min));
+        Log.d("Milis alarma: ", String.valueOf(calendar.getTimeInMillis()));
+        Log.d("Milis Actual: ", String.valueOf(System.currentTimeMillis()));
+
+        alarmMgr.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
 
         /*
         ComponentName receiver = new ComponentName(context, BootReceiver.class);

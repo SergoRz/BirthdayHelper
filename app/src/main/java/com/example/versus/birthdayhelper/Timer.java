@@ -7,10 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
-import java.util.Calendar;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -36,6 +34,7 @@ public class Timer extends DialogFragment implements TimePickerDialog.OnTimeSetL
         editor.putInt("horaMensaje", hourOfDay);
         editor.putInt("minutosMensaje", minute);
         editor.apply();
-    }
 
+        Log.d("Hora cambiada: ", String.valueOf(hourOfDay + ":" + minute));
+    }
 }
