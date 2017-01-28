@@ -12,7 +12,8 @@ import java.util.ArrayList;
 
 public class ContactosDbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;//Contexto de acción para el helper.
-    public static final String DATABASE_NAME = "miscumples.db";//Nombre del archivo con extensión .db
+    public static final String DATABASE_NAME = "miscumples.db";
+    //Nombre del archivo con extensión .db
 
     //Sentencia SQL que crea la tabla
     String sqlCreate = "CREATE TABLE " + ContactosContract.ContactoEntry.TABLE_NAME + " ("
@@ -37,6 +38,7 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //Se ejecuta la sentencia SQL de la creacion de la tabla
         db.execSQL(sqlCreate);
     }
 
@@ -84,7 +86,9 @@ public class ContactosDbHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(ContactosContract.ContactoEntry.NOMBRE, oContacto.getNombre());
         contentValues.put(ContactosContract.ContactoEntry.TELEFONO, oContacto.getTelefono());
-        db.update(ContactosContract.ContactoEntry.TABLE_NAME, contentValues, ContactosContract.ContactoEntry.ID + " = ?", new String[]{String.valueOf(oContacto.getId())});
+        db.update(ContactosContract.ContactoEntry.TABLE_NAME, contentValues,
+                ContactosContract.ContactoEntry.ID + " = ?",
+                new String[]{String.valueOf(oContacto.getId())});
     }
 
     /**
