@@ -43,8 +43,8 @@
                     android:text=""
                     android:ems="10"
                     android:id="@+id/etNombre"
-                    android:layout_weight="0.12"
-                    android:enabled="false" />
+                    android:enabled="false"
+                    android:layout_weight="0.28" />
 
                 <Button
                     android:text="..."
@@ -122,7 +122,7 @@
             android:text="cambiar fecha"
             android:layout_width="101dp"
             android:layout_height="wrap_content"
-            android:id="@+id/button"
+            android:id="@+id/btnFecha"
             android:onClick="cambiarFecha"
             />
 
